@@ -1,0 +1,71 @@
+Cahier des Charges - Projet Notion-Like
+1. Introduction
+1.1 Objectif du Projet
+
+Le projet vise à créer une plateforme collaborative tout-en-un offrant des fonctionnalités similaires à Notion, permettant aux utilisateurs de créer, organiser et partager des contenus de manière flexible.
+1.2 Portée du Projet
+
+Le projet inclura le développement d'une application web avec des fonctionnalités de création de pages, d'organisation à l'aide de blocs modulaires, de collaboration en temps réel, et de gestion des utilisateurs et des autorisations.
+2. Fonctionnalités
+2.1 Gestion des Utilisateurs
+
+    Inscription d'utilisateurs avec des identifiants uniques.
+    Connexion sécurisée avec gestion de sessions.
+    Profils d'utilisateurs avec la possibilité de personnaliser les préférences.
+
+2.2 Création et Organisation de Contenu
+
+    Création de pages avec une variété de types de blocs (texte, liste, tableau, fichier, etc.).
+    Possibilité de hiérarchiser les pages et les blocs.
+    Fonction de recherche avancée pour trouver rapidement le contenu.
+
+2.3 Collaboration en Temps Réel
+
+    Possibilité pour plusieurs utilisateurs de collaborer en temps réel sur une même page.
+    Synchronisation instantanée des modifications apportées par différents utilisateurs.
+
+2.4 Gestion des Autorisations
+
+    Attribution de droits d'accès différents aux utilisateurs pour chaque page ou workspace.
+    Possibilité de partager des pages avec des utilisateurs spécifiques ou avec un lien.
+
+3. Architecture Technique
+3.1 Langages et Frameworks
+
+    Utilisation de [indiquer les langages de programmation] pour le développement backend.
+    Framework [indiquer le framework] pour la gestion des routes et des contrôleurs.
+    Utilisation de [indiquer les langages] pour le développement frontend.
+    Framework [indiquer le framework] pour l'interface utilisateur.
+
+3.2 Base de Données
+
+    Utilisation de [indiquer le type de base de données] pour stocker les données utilisateur et le contenu.
+
+3.3 Sécurité
+
+    Implémentation de protocoles de sécurité tels que HTTPS.
+    Gestion sécurisée des sessions utilisateur.
+    Hashage et salage des mots de passe.
+
+4. Planification
+4.1 Étapes du Projet
+
+    Conception et Planification
+    Développement Backend
+    Développement Frontend
+    Intégration et Tests
+    Déploiement
+
+4.2 Calendrier
+
+    [Indiquer les dates prévues pour chaque étape du projet]
+
+5. Livrables
+
+    Application web fonctionnelle répondant aux spécifications du cahier des charges.
+    Documentation complète du code source.
+    Guide d'utilisation pour les utilisateurs finaux.
+
+6. Budget
+
+    [Indiquer le budget alloué pour le projet, en incluant les coûts de développement, d'hébergement, etc.]
