@@ -3,9 +3,11 @@ Cahier des Charges - Projet Notion-Like
 1.1 Objectif du Projet
 
 Le projet vise à créer une plateforme collaborative tout-en-un offrant des fonctionnalités similaires à Notion, permettant aux utilisateurs de créer, organiser et partager des contenus de manière flexible.
+
 1.2 Portée du Projet
 
 Le projet inclura le développement d'une application web avec des fonctionnalités de création de pages, d'organisation à l'aide de blocs modulaires, et de gestion des utilisateurs et des autorisations.
+
 2. Fonctionnalités
 2.1 Gestion des Utilisateurs
 
