@@ -15,12 +15,17 @@ class User extends Model
         'password',
         'image',
         'preferences',
-        'role',
+        'role'
     ];
 
     public function notifications()
     {
         return $this->hasMany(Notification::class);
+    }
+
+    public function workspaces()
+    {
+        return $this->hasMany(Workspace::class);
     }
 
     public function workspacePermissions()

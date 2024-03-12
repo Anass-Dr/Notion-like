@@ -14,7 +14,7 @@ class Block extends Model
         'type_id',
         'content',
         'order',
-        'page_id',
+        'page_id'
     ];
 
     public function page()
@@ -22,7 +22,7 @@ class Block extends Model
         return $this->belongsTo(Page::class);
     }
 
-    public function blockType()
+    public function type()
     {
         return $this->belongsTo(BlockType::class);
     }
