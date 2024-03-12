@@ -27,4 +27,9 @@ class User extends Model
     {
         return $this->hasMany(Workspace::class);
     }
+
+    public function workspacePermissions()
+    {
+        return $this->hasMany(WorkspacePermission::class);
+    }
 }

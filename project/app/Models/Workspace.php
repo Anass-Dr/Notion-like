@@ -11,8 +11,13 @@ class Workspace extends Model
 
     protected $fillable = [
         'name',
-        'description'
+        'description',
     ];
+
+    public function workspacePermissions()
+    {
+        return $this->hasMany(WorkspacePermission::class);
+    }
 
     public function pages()
     {
