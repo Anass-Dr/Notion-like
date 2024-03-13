@@ -15,7 +15,7 @@ class User extends Model
         'password',
         'image',
         'preferences',
-        'role',
+        'role'
     ];
 
     public function notifications()
@@ -23,8 +23,21 @@ class User extends Model
         return $this->hasMany(Notification::class);
     }
 
+    public function workspaces()
+    {
+        return $this->hasMany(Workspace::class);
+    }
+
     public function workspacePermissions()
     {
         return $this->hasMany(WorkspacePermission::class);
     }
+
+    protected $hidden = [
+        'password'
+    ];
+
+    protected $casts = [
+        'password' => 'hashed',
+    ];
 }
