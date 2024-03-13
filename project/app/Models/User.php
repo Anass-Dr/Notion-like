@@ -32,4 +32,12 @@ class User extends Model
     {
         return $this->hasMany(WorkspacePermission::class);
     }
+
+    protected $hidden = [
+        'password'
+    ];
+
+    protected $casts = [
+        'password' => 'hashed',
+    ];
 }
