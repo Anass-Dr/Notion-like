@@ -1,0 +1,76 @@
+.container {
+    padding: 20px;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+header {
+    margin: 20px 0;
+}
+header > div {
+    display: flex;
+    align-items: center;
+}
+
+main {
+    margin-top: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+main form {
+    width: 320px;
+}
+main form label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 12px;
+    color: rgba(55, 53, 47, 0.65);
+    font-weight: 500;
+}
+main form input {
+    width: 100%;
+    padding: 4px 10px;
+    border: 1px solid rgba(55, 53, 47, 0.15);
+    border-radius: 4px;
+    outline: none;
+    font-size: 15px;
+    background-color: rgba(242, 241, 238, 0.6);
+    margin-top: 4px;
+    margin-bottom: 12px;
+}
+main form button {
+    width: 100%;
+    padding: 5px 10px;
+    border: 1px solid rgba(55, 53, 47, 0.15);
+    border-radius: 4px;
+    outline: none;
+    font-size: 15px;
+    font-weight: 500;
+    color: #fff;
+    background-color: rgb(35, 131, 226);
+    margin-top: 4px;
+    margin-bottom: 8px;
+    cursor: pointer;
+}
+main .form-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+main form a {
+    color: rgba(55, 53, 47, 0.65);
+    text-decoration: underline;
+    text-align: center;
+}
+
+@media screen and (max-width: 400px) {
+    h2 {
+        font-size: 34px;
+    }
+    main form {
+        width: 100%;
+    }
+}
