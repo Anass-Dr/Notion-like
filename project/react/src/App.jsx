@@ -1,7 +1,14 @@
-function App() {
-    const [count, setCount] = useState(0);
+import Auth from "./Auth/Auth";
+import Login from "./Auth/Login";
+import Register from "./Auth/Register";
 
-    return <></>;
+function App() {
+    return (
+        <Auth>
+            {/* <Login /> */}
+            <Register />
+        </Auth>
+    );
 }
 
 export default App;
