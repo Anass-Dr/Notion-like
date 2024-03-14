@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Services\JWT\GenerateToken;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
@@ -29,7 +28,10 @@ class AuthController extends Controller
         }
 
         $user = User::create($request->only('username', 'email', 'password'));
-        return response()->json($user, 201);
+        return response()->json([
+            "success" => true,
+            "message" => "User registered successfully"
+        ], 201);
     }
 
     public function login(Request $request)
