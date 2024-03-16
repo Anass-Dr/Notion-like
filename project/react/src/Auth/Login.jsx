@@ -11,19 +11,26 @@ function Login() {
     const [passwordForgot, setPasswordForgot] = useState(false);
     const nav = useNavigate();
 
-    const handleInputChange = (e) => {
+    // #- Handlers :
+    function handleInputChange(e) {
         const obj = { ...user, [e.target.name]: e.target.value };
         setUser(obj);
-    };
+    }
 
-    const handlePassword = (e) => {
+    function handlePassword(e) {
         e.preventDefault();
         setPasswordForgot(!passwordForgot);
-    };
+    }
 
-    const handleSubmit = async (e) => {
+    function handleSubmit(e) {
         e.preventDefault();
 
+        if (passwordForgot) forgotPassword();
+        else login();
+    }
+
+    // #- Methods :
+    const login = async () => {
         const res = await fetch("http://127.0.0.1:8000/api/login", {
             method: "post",
             headers: {
@@ -33,6 +40,17 @@ function Login() {
         });
         const data = await res.json();
         // if(res.status == 200);
+    };
+
+    const forgotPassword = async () => {
+        const res = await fetch("http://127.0.0.1:8000/api/forgot-password", {
+            method: "post",
+            headers: {
+                "content-type": "application/json",
+            },
+            body: JSON.stringify({ email: user.email }),
+        });
+        const data = await res.json();
     };
 
     return (
