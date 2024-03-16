@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ResetPasswordEmail;
 use App\Models\User;
+use App\Services\Email\GenerateToken as EmailGenerateToken;
 use App\Services\JWT\GenerateToken;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
@@ -52,5 +55,34 @@ class AuthController extends Controller
             "success" => true,
             "token" => $token,
         ], 200);
+    }
+
+    public function forgotPassword(Request $request)
+    {
+        $user = User::where('email', $request->email)->first();
+
+        if ($user) {
+            $token = EmailGenerateToken::new();
+            $data = [
+                "token" => $token,
+            ];
+
+            Mail::to($user->email)->send(new ResetPasswordEmail($data));
+
+            return response()->json([
+                "success" => true,
+                "message" => "Reset link sent to your email"
+            ], 200);
+        }
+
+        return response()->json([
+            "success" => false,
+            "message" => "Email not found"
+        ], 404);
+    }
+
+    public function verifyResetToken(string $token)
+    {
+        dd($token);
     }
 }
