@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Mail\ResetPasswordEmail;
+use App\Models\PasswordToken;
 use App\Models\User;
 use App\Services\Email\GenerateToken as EmailGenerateToken;
 use App\Services\JWT\GenerateToken;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
@@ -63,6 +65,11 @@ class AuthController extends Controller
 
         if ($user) {
             $token = EmailGenerateToken::new();
+            PasswordToken::create([
+                "token" => $token,
+                "user_id" => $user->id
+            ]);
+
             $data = [
                 "token" => $token,
             ];
@@ -83,6 +90,16 @@ class AuthController extends Controller
 
     public function verifyResetToken(string $token)
     {
-        dd($token);
+        $passwordToken = PasswordToken::where('token', $token)->first();
+
+        if ($passwordToken) {
+            Session::put('user_id', $passwordToken->user_id);
+            redirect('http://127.0.0.1:3000/reset-password');
+        }
+
+        return response()->json([
+            "success" => false,
+            "message" => "Token expired or not found"
+        ], 404);
     }
 }
