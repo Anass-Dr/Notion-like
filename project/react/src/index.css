@@ -3,6 +3,7 @@
     --text-gray: rgba(25, 23, 17, 0.6);
     --active-bg: rgba(0, 0, 0, 0.05);
     --hover-bg: rgba(0, 0, 0, 0.06);
+    --after-content: "Write something, or press '/' for commands…";
 }
 
 * {
