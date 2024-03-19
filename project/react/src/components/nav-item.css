@@ -1,0 +1,16 @@
+.nav-item {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding: 6px 10px 6px 0;
+    font-size: 13px;
+    color: var(--text-gray);
+    border-radius: 4px;
+    cursor: pointer;
+}
+.nav-item:hover {
+    background-color: var(--hover-bg);
+}
+.nav-item span {
+    font-weight: 600;
+}
