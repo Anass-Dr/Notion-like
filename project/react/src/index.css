@@ -1,3 +1,10 @@
+:root {
+    --text-dark: rgb(55, 53, 47);
+    --text-gray: rgba(25, 23, 17, 0.6);
+    --active-bg: rgba(0, 0, 0, 0.05);
+    --hover-bg: rgba(0, 0, 0, 0.06);
+}
+
 * {
     margin: 0;
     padding: 0;
