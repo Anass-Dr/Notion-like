@@ -1,0 +1,50 @@
+#sidebar {
+    padding: 14px 14px 20px;
+    border-right: 1px solid rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+}
+.workspace {
+    margin-bottom: 8px;
+    color: var(--text-dark);
+    font-size: 17px;
+}
+.workspace #icon {
+    font-size: 13.5px;
+    font-weight: 600;
+    padding: 2px 6px;
+    color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.08);
+    border-radius: 4px;
+    margin-right: 8px;
+}
+.workspace span:last-child {
+    font-size: 13px;
+    font-weight: 600;
+}
+.head {
+    padding: 0 4px;
+    margin-bottom: 14px;
+}
+.nav {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+.pages {
+    flex-grow: 1;
+}
+.group_page {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(55, 53, 47, 0.5);
+    margin-bottom: 10px;
+}
+.shared {
+    margin-bottom: 14px;
+}
+.footer {
+    margin-top: 2rem;
+}

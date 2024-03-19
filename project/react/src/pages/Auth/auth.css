@@ -1,35 +1,40 @@
-.container {
+#auth {
+    height: 100%;
+}
+#auth .container {
+    width: 100%;
+    height: 100%;
     padding: 20px;
     max-width: 1280px;
     margin: 0 auto;
 }
 
-header {
+#auth header {
     margin: 20px 0;
 }
-header > div {
+#auth header > div {
     display: flex;
     align-items: center;
 }
 
-main {
+#auth main {
     margin-top: 80px;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 2rem;
 }
-main form {
+#auth main form {
     width: 320px;
 }
-main form label {
+#auth main form label {
     display: block;
     margin-bottom: 4px;
     font-size: 12px;
     color: rgba(55, 53, 47, 0.65);
     font-weight: 500;
 }
-main form input {
+#auth main form input {
     width: 100%;
     padding: 4px 10px;
     border: 1px solid rgba(55, 53, 47, 0.15);
@@ -40,7 +45,7 @@ main form input {
     margin-top: 4px;
     margin-bottom: 12px;
 }
-main form button {
+#auth main form button {
     width: 100%;
     padding: 5px 10px;
     border: 1px solid rgba(55, 53, 47, 0.15);
@@ -54,23 +59,23 @@ main form button {
     margin-bottom: 8px;
     cursor: pointer;
 }
-main .form-footer {
+#auth main .form-footer {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 6px;
 }
-main form a {
+#auth main form a {
     color: rgba(55, 53, 47, 0.65);
     text-decoration: underline;
     text-align: center;
 }
 
 @media screen and (max-width: 400px) {
-    h2 {
+    #auth h2 {
         font-size: 34px;
     }
-    main form {
+    #auth main form {
         width: 100%;
     }
 }

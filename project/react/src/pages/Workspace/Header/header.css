@@ -1,0 +1,15 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    color: var(--text-dark);
+}
+header .title {
+    font-size: 14px;
+}
+header #options {
+    display: inherit;
+    gap: 1rem;
+    font-size: 14px;
+}
