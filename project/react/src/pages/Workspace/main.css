@@ -1,0 +1,52 @@
+#user {
+    height: 100%;
+}
+#user .container {
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    display: grid;
+    grid-template-areas:
+        "sidebar header"
+        "sidebar main";
+    grid-template-columns: 260px 1fr;
+    grid-template-rows: 45px 1fr;
+}
+
+#user header {
+    grid-area: header;
+}
+#user #sidebar {
+    grid-area: sidebar;
+}
+#user main {
+    grid-area: main;
+}
+
+[contenteditable] {
+    outline: none;
+}
+/* .codex-editor__redactor {
+    padding-bottom: 0 !important;
+} */
+.ce-block__content {
+    max-width: none !important;
+    padding-left: 2rem;
+}
+.ce-toolbar__actions {
+    right: 0;
+    left: -120px;
+}
+
+/* Customizing the Scrollbar : */
+::-webkit-scrollbar {
+    background: transparent;
+    width: 10px;
+    height: 10px;
+}
+::-webkit-scrollbar-track {
+    background: #edece9;
+}
+::-webkit-scrollbar-thumb {
+    background: #d3d1cb;
+}
