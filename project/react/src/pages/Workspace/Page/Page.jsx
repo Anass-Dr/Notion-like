@@ -1,6 +1,6 @@
 import { useState } from "react";
 import PageImage from "./PageImage";
-import Editor from "../../../Editor";
+import Editor from "../../../Editor/Editor";
 import "./page.css";
 
 // Initial Data
@@ -19,11 +19,7 @@ function Page() {
                 <span className="title">Page Title</span>
             </div>
             <div id="editorjs" className="content">
-                <Editor
-                    data={data}
-                    onChange={setData}
-                    editorblock="editorjs-container"
-                />
+                <Editor data={data} onChange={setData} />
             </div>
         </main>
     );

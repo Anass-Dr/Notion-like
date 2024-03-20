@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,5 +25,8 @@ Route::get('/reset-password/{token}', [AuthController::class, 'verifyResetToken'
 
 # Users Endpoint :
 Route::middleware('jwt.auth')->group(function () {
-  // Route::resource('/users', UserController::class);
+  Route::get('/pages', [PageController::class, 'index']);
+  Route::post('/pages', [PageController::class, 'store']);
+  Route::put('/pages', [PageController::class, 'update']);
+  Route::delete('/pages', [PageController::class, 'destroy']);
 });
