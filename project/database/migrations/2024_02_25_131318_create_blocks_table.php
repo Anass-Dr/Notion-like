@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('blocks', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->foreignId('type_id')->constrained('block_types')->onDelete('cascade')->onUpdate('cascade');
             $table->text('content');
             $table->integer('order');
