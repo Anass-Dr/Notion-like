@@ -1,8 +1,16 @@
+import { useContext } from "react";
+import { WorkspaceContext } from "../context/WorkspaceContext";
 import "./nav-item.css";
 
 function NavItem({ title, children }) {
+    const { handleNewPage } = useContext(WorkspaceContext);
+
+    const handleClick = () => {
+        if (title === "New page") handleNewPage();
+    };
+
     return (
-        <li className="nav-item">
+        <li onClick={handleClick} className="nav-item">
             {children}
             <span>{title}</span>
         </li>
