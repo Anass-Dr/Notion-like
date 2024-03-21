@@ -13,7 +13,7 @@ const blocksHTML = {
         '<div class="_heading3 block" data-type="Heading 3" contentEditable></div>',
 };
 
-export default function Editor() {
+export default function Editor({ blocks, saveChange }) {
     const [prompt, setPrompt] = useState(false);
     const [prompt__input, setPromptInput] = useState(true);
     const [prompt_placeholder, setPromptPlaceholder] = useState(true);
@@ -74,9 +74,20 @@ export default function Editor() {
             const data = await res.json();
             setBlockTypes(data);
         };
-
         fetchBlockTypes();
     }, []);
+
+    useEffect(() => {
+        if (blocks.length) {
+            setPromptInput(false);
+            blocks.map((block) => {
+                editorRef.current.insertAdjacentHTML(
+                    "beforeend",
+                    blockTypes[block.type]
+                );
+            });
+        }
+    }, [blocks, blockTypes]);
 
     useEffect(() => {
         if (promptInputRef.current) {

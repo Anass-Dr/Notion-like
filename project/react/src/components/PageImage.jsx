@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { headers } from "../config/fetchHeaders";
 import "./page-image.css";
 
 export default function PageImage({ src }) {
@@ -13,11 +14,8 @@ export default function PageImage({ src }) {
             src,
         };
         const res = await fetch("http://127.0.0.1:8000/api/pages/1", {
-            method: "post",
-            headers: {
-                "content-type": "application/json",
-                authorisation: "Bearer $token",
-            },
+            method: "put",
+            headers,
             body: JSON.stringify(data),
         });
         const message = await res.json();
