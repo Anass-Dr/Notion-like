@@ -1,16 +1,10 @@
 import { useState } from "react";
-import PageImage from "./PageImage";
+import PageImage from "../../../components/PageImage";
 import Editor from "../../../Editor/Editor";
 import "./page.css";
 
-// Initial Data
-const INITIAL_DATA = {
-    time: new Date().getTime(),
-    blocks: [],
-};
-
 function Page() {
-    const [data, setData] = useState(INITIAL_DATA);
+    const [data, setData] = useState({});
 
     return (
         <main>
