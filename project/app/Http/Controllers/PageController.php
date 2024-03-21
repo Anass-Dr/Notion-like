@@ -37,4 +37,9 @@ class PageController extends Controller
         }
         return response()->json(["message" => "ok"]);
     }
+
+    public function update(string $id, Request $request)
+    {
+        $page = Page::find($id);
+    }
 }
