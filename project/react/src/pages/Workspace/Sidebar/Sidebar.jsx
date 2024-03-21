@@ -1,8 +1,12 @@
+import { useContext } from "react";
+import { WorkspaceContext } from "../../../context/WorkspaceContext";
 import NavItem from "../../../components/NavItem";
 import SidebarPage from "../../../components/SidebarPage";
 import "./sidebar.css";
 
 function Sidebar() {
+    const { data } = useContext(WorkspaceContext);
+
     return (
         <div id="sidebar">
             <div className="workspace">
@@ -24,41 +28,14 @@ function Sidebar() {
                 <div className="pages">
                     <div className="shared">
                         <span className="group_page">Shared</span>
-                        <ul>
-                            <SidebarPage title="Caching" />
-                            <SidebarPage title="Learning C" />
-                        </ul>
+                        <ul></ul>
                     </div>
                     <div className="private">
                         <span className="group_page">Private</span>
                         <ul>
-                            <SidebarPage title="Full Stack Developer" />
-                            <SidebarPage title="Password Manager" />
-                            <SidebarPage title="Password Manager" />
-                            <SidebarPage title="Password Manager" />
-                            <SidebarPage title="Password Manager" />
-                            <SidebarPage title="Password Manager" />
-                            <SidebarPage title="Password Manager" />
-                            <SidebarPage title="Password Manager" />
-                            <SidebarPage title="Password Manager" />
-                            <SidebarPage title="Password Manager" />
-                            <SidebarPage title="Password Manager" />
-                            <SidebarPage title="Password Manager" />
-                            <SidebarPage title="Password Manager" />
-                            <SidebarPage title="Password Manager" />
-                            <SidebarPage title="Password Manager" />
-                            <SidebarPage title="Password Manager" />
-                            <SidebarPage title="Password Manager" />
-                            <SidebarPage title="Password Manager" />
-                            <SidebarPage title="Password Manager" />
-                            <SidebarPage title="Password Manager" />
-                            <SidebarPage title="Password Manager" />
-                            <SidebarPage title="Password Manager" />
-                            <SidebarPage title="Password Manager" />
-                            <SidebarPage title="Password Manager" />
-                            <SidebarPage title="Password Manager" />
-                            <SidebarPage title="Password Manager" />
-                            <SidebarPage title="Password Manager" />
+                            {data.map((page) => (
+                                <SidebarPage key={page.id} title={page.title} />
+                            ))}
                         </ul>
                     </div>
                 </div>
