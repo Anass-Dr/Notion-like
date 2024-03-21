@@ -1,19 +1,31 @@
-import { useState } from "react";
+import { useContext } from "react";
+import { WorkspaceContext } from "../../../context/WorkspaceContext";
 import PageImage from "../../../components/PageImage";
 import Editor from "../../../Editor/Editor";
 import "./page.css";
 
 function Page() {
-    const [data, setData] = useState({});
+    const { data, saveChange } = useContext(WorkspaceContext);
+    const currPage = data.filter((page) => page.active)[0];
+
+    const handleTitleChange = (e) => {
+        saveChange("title", e.currentTarget.textContent);
+    };
 
     return (
         <main>
-            <PageImage />
-            <div className="head" contentEditable>
-                <span className="title">Page Title</span>
+            {currPage.cover && <PageImage src={currPage.cover} />}
+            <div className="head">
+                <span
+                    onKeyUp={handleTitleChange}
+                    className="title"
+                    contentEditable
+                >
+                    {currPage.title}
+                </span>
             </div>
             <div id="editorjs" className="content">
-                <Editor data={data} onChange={setData} />
+                <Editor blocks={currPage.blocks} saveChange={saveChange} />
             </div>
         </main>
     );
