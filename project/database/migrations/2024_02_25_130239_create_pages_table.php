@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('icon')->nullable();
-            $table->string('background')->nullable();
+            $table->string('cover')->nullable();
+            $table->boolean('active')->default(false);
             $table->timestamp('deleted_at')->nullable();
-            $table->foreignId('workspace_id')->constrained('workspaces')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

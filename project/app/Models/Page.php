@@ -12,9 +12,9 @@ class Page extends Model
     protected $fillable = [
         'title',
         'icon',
-        'background',
+        'cover',
+        'active',
         'deleted_at',
-        'workspace_id'
     ];
 
     public function blocks()
