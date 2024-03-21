@@ -1,10 +1,12 @@
 #editor {
+    padding-top: 1rem;
     flex-grow: 1;
 }
 
 #prompt {
     position: absolute;
     width: 324px;
+    max-height: 40vh;
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
@@ -19,11 +21,31 @@
     padding-left: 14px;
     margin-bottom: 8px;
 }
-._paragraph {
+.prompt__input {
+    margin: 6px 0;
+    padding: 8px 0;
 }
-._paragraph::after {
+.prompt__input::after {
     content: var(--after-content);
     color: var(--text-dark);
     opacity: 0.7;
     cursor: text;
+}
+
+.block {
+    margin-top: 1rem;
+    margin-bottom: 4px;
+    opacity: 0.9;
+}
+._heading1 {
+    font-weight: 600;
+    font-size: 30px;
+}
+._heading2 {
+    font-weight: 600;
+    font-size: 24px;
+}
+._heading3 {
+    font-weight: 600;
+    font-size: 20px;
 }
