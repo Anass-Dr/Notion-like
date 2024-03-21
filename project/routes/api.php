@@ -1,8 +1,9 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BlockController;
+use App\Http\Controllers\BlockTypeController;
 use App\Http\Controllers\PageController;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,10 +24,12 @@ Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
 Route::get('/reset-password/{token}', [AuthController::class, 'verifyResetToken'])->name('password.reset');
 // Route::post('/reset-password/{token}', [AuthController::class, 'resetPassword']);
 
-# Users Endpoint :
 Route::middleware('jwt.auth')->group(function () {
+  # Page Endpoint :
   Route::get('/pages', [PageController::class, 'index']);
   Route::post('/pages', [PageController::class, 'store']);
   Route::put('/pages', [PageController::class, 'update']);
   Route::delete('/pages', [PageController::class, 'destroy']);
 });
+
+Route::get('/block-types', [BlockTypeController::class, 'index']);
