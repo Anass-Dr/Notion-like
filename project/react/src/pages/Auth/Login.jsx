@@ -39,7 +39,10 @@ function Login() {
             body: JSON.stringify(user),
         });
         const data = await res.json();
-        // if(res.status == 200);
+        if (res.status == 200) {
+            localStorage.setItem("jwt_token", data.token);
+            nav("/user");
+        }
     };
 
     const forgotPassword = async () => {
