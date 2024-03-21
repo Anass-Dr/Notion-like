@@ -16,44 +16,45 @@ const blocksHTML = {
 export default function Editor() {
     const [prompt, setPrompt] = useState(false);
     const [prompt__input, setPromptInput] = useState(true);
+    const [prompt_placeholder, setPromptPlaceholder] = useState(true);
     const [cords, setCords] = useState([]);
     const [blockTypes, setBlockTypes] = useState([]);
-    const editorRef = useRef();
-    const promptInputRef = useRef();
+    const editorRef = useRef(null);
+    const promptInputRef = useRef(null);
 
     const handleChange = (e) => {
-        const target = e.target;
+        const editorBlocksNb = editorRef.current.querySelectorAll("div").length;
         if (e.key == "Enter") {
             e.preventDefault();
             setPrompt(false);
             setPromptInput(true);
-            editorRef.current.lastElementChild.focus();
-        } else if (
-            target.classList.contains("prompt__input") &&
-            e.key == "/" &&
-            !e.currentTarget.textContent.length
-        ) {
-            const cords = e.target.getBoundingClientRect();
-            setCords([+cords.top + 30, cords.left]);
-            setPrompt(true);
-        } else {
-            setPrompt(false);
+            setPromptPlaceholder(true);
+        } else if (e.key == "Backspace" && e.target.textContent.length == 0) {
+            if (e.target.classList.contains("prompt__input")) {
+                if (editorBlocksNb > 1) setPromptInput(false);
+            } else {
+                e.target.remove();
+                if (editorBlocksNb <= 1) setPromptInput(true);
+            }
         }
     };
 
     const handlePromptPlacholder = (e) => {
-        const placeholder = e.key === "/" ? "Press '/' for commands…" : "";
-        document.documentElement.style.setProperty(
-            "--after-content",
-            placeholder
-        );
+        if (e.key === "/") {
+            setPromptPlaceholder(false);
+            const cords = e.target.getBoundingClientRect();
+            setCords([+cords.top + 30, cords.left]);
+            setPrompt(true);
+        } else {
+            setPromptPlaceholder(true);
+            setPrompt(false);
+        }
     };
 
     const handlePromptKey = (e) => {
         if (e.key !== "/" && e.key !== "Delete" && e.key !== "Backspace") {
             return e.preventDefault();
         }
-
         // Handle Prompt input placeholder :
         handlePromptPlacholder(e);
     };
@@ -68,15 +69,6 @@ export default function Editor() {
 
     // Side Effects :
     useEffect(() => {
-        const prompt__input = document.querySelector(".prompt__input");
-
-        prompt__input?.addEventListener("keydown", handlePromptKey);
-
-        return () =>
-            prompt__input?.removeEventListener("keydown", handlePromptKey);
-    });
-
-    useEffect(() => {
         const fetchBlockTypes = async () => {
             const res = await fetch("http://127.0.0.1:8000/api/block-types");
             const data = await res.json();
@@ -86,10 +78,23 @@ export default function Editor() {
         fetchBlockTypes();
     }, []);
 
+    useEffect(() => {
+        if (promptInputRef.current) {
+            promptInputRef.current.focus();
+        }
+    }, [prompt__input]);
+
     return (
         <div id="editor" ref={editorRef} onKeyDown={handleChange}>
             {prompt__input && (
-                <div className="prompt__input" contentEditable></div>
+                <div
+                    ref={promptInputRef}
+                    onKeyDown={handlePromptKey}
+                    className={`prompt__input ${
+                        prompt_placeholder ? "prompt__input-after" : ""
+                    }`}
+                    contentEditable
+                ></div>
             )}
             {prompt && (
                 <Prompt
@@ -97,23 +102,17 @@ export default function Editor() {
                     left={cords[1]}
                     types={blockTypes}
                     handleBlockClick={handleBlockClick}
-                    promptInputRef={promptInputRef}
                 />
             )}
         </div>
     );
 }
 
-function Prompt({ top, left, types, handleBlockClick, promptInputRef }) {
+function Prompt({ top, left, types, handleBlockClick }) {
     const styles = { top, left };
 
     return (
-        <div
-            ref={promptInputRef}
-            style={styles}
-            id="prompt"
-            contentEditable="false"
-        >
+        <div style={styles} id="prompt" contentEditable="false">
             <span className="prompt__head">Basic blocks</span>
             {types.map((type) => (
                 <PromptBlock
