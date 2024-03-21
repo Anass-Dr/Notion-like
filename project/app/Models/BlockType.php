@@ -10,7 +10,9 @@ class BlockType extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name'
+        'name',
+        'description',
+        'image'
     ];
 
     public function blocks()
