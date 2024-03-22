@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\ResetPasswordEmail;
+use App\Models\Page;
 use App\Models\PasswordToken;
 use App\Models\User;
 use App\Services\Email\GenerateToken as EmailGenerateToken;
@@ -33,6 +34,12 @@ class AuthController extends Controller
         }
 
         $user = User::create($request->only('username', 'email', 'password'));
+        Page::create([
+            "title" => "Untitled",
+            "active" => true,
+            "user_id" => $user->id
+        ]);
+
         return response()->json([
             "success" => true,
             "message" => "User registered successfully"
@@ -56,6 +63,7 @@ class AuthController extends Controller
         return response()->json([
             "success" => true,
             "token" => $token,
+            "user" => $user
         ], 200);
     }
 
