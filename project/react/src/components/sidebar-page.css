@@ -11,6 +11,6 @@
 .sidebar__page:hover {
     background-color: var(--hover-bg);
 }
-.sidebar__page:first-child {
+.sidebar__page.active {
     background-color: var(--active-bg);
 }
