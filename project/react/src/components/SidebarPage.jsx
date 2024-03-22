@@ -1,8 +1,20 @@
+import { useContext } from "react";
+import { WorkspaceContext } from "../context/WorkspaceContext";
 import "./sidebar-page.css";
 
-function SidebarPage({ title }) {
+function SidebarPage({ id, title, active }) {
+    const { changeActivePage } = useContext(WorkspaceContext);
+
+    const handleClick = (e) => {
+        changeActivePage(e.target.dataset.id);
+    };
+
     return (
-        <li className="sidebar__page">
+        <li
+            onClick={handleClick}
+            className={`sidebar__page ${active ? "active" : ""}`}
+            data-id={id}
+        >
             <svg
                 role="graphics-symbol"
                 viewBox="0 0 16 16"
