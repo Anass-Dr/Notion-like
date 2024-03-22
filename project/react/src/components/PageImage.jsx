@@ -4,8 +4,8 @@ import { useState, useRef } from "react";
 import { headers } from "../config/fetchHeaders";
 import "./page-image.css";
 
-export default function PageImage({ id, src }) {
-    const { handlePageCover } = useContext(WorkspaceContext);
+export default function PageImage({ src }) {
+    const { saveChange } = useContext(WorkspaceContext);
     const [onHover, setOnHover] = useState(false);
     const [showToolbar, setShowToolbar] = useState(false);
 
@@ -21,7 +21,7 @@ export default function PageImage({ id, src }) {
             body: JSON.stringify(data),
         });
         const message = await res.json();
-        handlePageCover(id, src);
+        saveChange("cover", src);
     };
 
     return (
