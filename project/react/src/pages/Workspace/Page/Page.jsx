@@ -14,10 +14,11 @@ function Page() {
 
     return (
         <main>
-            {currPage.cover && <PageImage src={currPage.cover} />}
+            <PageImage src={currPage.cover} />
+
             <div className="head">
                 <span
-                    onKeyUp={handleTitleChange}
+                    onBlur={handleTitleChange}
                     className="title"
                     contentEditable
                 >
