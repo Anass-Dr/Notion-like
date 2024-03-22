@@ -1,9 +1,11 @@
+import { useContext } from "react";
+import { WorkspaceContext } from "../context/WorkspaceContext";
 import { useState, useRef } from "react";
 import { headers } from "../config/fetchHeaders";
 import "./page-image.css";
 
-export default function PageImage({ src }) {
-    const [imageSrc, setImgSrc] = useState(src);
+export default function PageImage({ id, src }) {
+    const { handlePageCover } = useContext(WorkspaceContext);
     const [onHover, setOnHover] = useState(false);
     const [showToolbar, setShowToolbar] = useState(false);
 
@@ -19,12 +21,12 @@ export default function PageImage({ src }) {
             body: JSON.stringify(data),
         });
         const message = await res.json();
-        console.log(message);
+        handlePageCover(id, src);
     };
 
     return (
         <div
-            style={{ backgroundImage: `url(${imageSrc})` }}
+            style={{ backgroundImage: `url(${src})` }}
             onMouseOver={() => setOnHover(true)}
             onMouseOut={() => setOnHover(false)}
             className="background"
@@ -38,7 +40,6 @@ export default function PageImage({ src }) {
             )}
             {showToolbar && (
                 <CoverToolbar
-                    setImgSrc={setImgSrc}
                     setShowToolbar={setShowToolbar}
                     setOnHover={setOnHover}
                     handleCover={handleCover}
@@ -48,7 +49,7 @@ export default function PageImage({ src }) {
     );
 }
 
-function CoverToolbar({ setImgSrc, setShowToolbar, setOnHover, handleCover }) {
+function CoverToolbar({ setShowToolbar, setOnHover, handleCover }) {
     const [tab, setTab] = useState(1);
     const linkInputRef = useRef(null);
 
@@ -60,7 +61,6 @@ function CoverToolbar({ setImgSrc, setShowToolbar, setOnHover, handleCover }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         const url = linkInputRef.current.value;
-        setImgSrc(url);
         setOnHover(false);
         setShowToolbar(false);
         handleCover("link", url);
