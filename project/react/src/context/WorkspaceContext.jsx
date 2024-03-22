@@ -24,12 +24,12 @@ export function WorkspaceContextProvider({ children }) {
             const data = await res.json();
             if (res.status == 200) setData(data);
         };
-        fetchData();
+        // fetchData();
     }, []);
 
     const handleNewPage = () => {
         setData([
-            ...data,
+            ...data.map((page) => ({ ...page, active: false })),
             {
                 id: data.length + 1,
                 title: "Untitled",
@@ -41,15 +41,33 @@ export function WorkspaceContextProvider({ children }) {
         ]);
     };
 
+    const changeActivePage = (id) => {
+        setData((prevItems) =>
+            prevItems.map((page) =>
+                page.id == id
+                    ? { ...page, active: true }
+                    : { ...page, active: false }
+            )
+        );
+    };
+
     const saveChange = (key, value) => {
-        const index = data.findIndex((page) => page.active);
-        const pages = data;
-        pages[index] = { ...pages[index], [key]: value };
-        setData(pages);
+        setData((prevItems) =>
+            prevItems.map((page) =>
+                page.active ? { ...page, [key]: value } : page
+            )
+        );
     };
 
     return (
-        <WorkspaceContext.Provider value={{ data, handleNewPage, saveChange }}>
+        <WorkspaceContext.Provider
+            value={{
+                data,
+                handleNewPage,
+                saveChange,
+                changeActivePage,
+            }}
+        >
             {children}
         </WorkspaceContext.Provider>
     );
