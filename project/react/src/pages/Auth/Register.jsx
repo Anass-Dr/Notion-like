@@ -11,14 +11,56 @@ function Register() {
         password: "",
         password_confirmation: "",
     });
+    const [isCredentialsValid, setIsCredentialsValid] = useState({
+        username: true,
+        email: true,
+        password: true,
+        passwordConfirmation: true,
+    });
 
     const handleInputChange = (e) => {
         const obj = { ...user, [e.target.name]: e.target.value };
         setUser(obj);
     };
 
+    const handleInputValidation = () => {
+        setIsCredentialsValid({
+            username: true,
+            email: true,
+            password: true,
+            passwordConfirmation: true,
+        });
+        let isValid = true;
+        const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+        const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
+
+        if (user.username.length < 3) {
+            isValid = false;
+            setIsCredentialsValid((prev) => ({ ...prev, username: false }));
+        }
+        if (!emailRegex.test(user.email)) {
+            isValid = false;
+            setIsCredentialsValid((prev) => ({ ...prev, email: false }));
+        }
+        if (!passwordRegex.test(user.password)) {
+            isValid = false;
+            setIsCredentialsValid((prev) => ({ ...prev, password: false }));
+        }
+        if (user.password !== user.password_confirmation) {
+            isValid = false;
+            setIsCredentialsValid((prev) => ({
+                ...prev,
+                passwordConfirmation: false,
+            }));
+        }
+
+        return isValid;
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (!handleInputValidation()) return;
 
         const res = await fetch("http://127.0.0.1:8000/api/register", {
             method: "post",
@@ -43,6 +85,11 @@ function Register() {
                         type="text"
                         placeholder="Enter your username..."
                         value={user.username}
+                        error={
+                            !isCredentialsValid.username && {
+                                msg: "Username must be at least 3 characters",
+                            }
+                        }
                         onChange={handleInputChange}
                     />
                     <FormInput
@@ -51,6 +98,11 @@ function Register() {
                         type="email"
                         placeholder="Enter your email address..."
                         value={user.email}
+                        error={
+                            !isCredentialsValid.email && {
+                                msg: "Invalid Email",
+                            }
+                        }
                         onChange={handleInputChange}
                     />
                     <FormInput
@@ -59,6 +111,11 @@ function Register() {
                         type="password"
                         placeholder="Enter your password"
                         value={user.password}
+                        error={
+                            !isCredentialsValid.password && {
+                                msg: "Password must be between 6 to 20 characters which contain at least one numeric digit, one uppercase and one lowercase letter",
+                            }
+                        }
                         onChange={handleInputChange}
                     />
                     <FormInput
@@ -67,6 +124,11 @@ function Register() {
                         type="password"
                         placeholder="Confirm your password"
                         value={user.password_confirmation}
+                        error={
+                            !isCredentialsValid.passwordConfirmation && {
+                                msg: "Password Not match",
+                            }
+                        }
                         onChange={handleInputChange}
                     />
                     <button type="submit">Submit</button>

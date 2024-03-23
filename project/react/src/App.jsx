@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import Contact from "./pages/Contact";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
+import Logout from "./pages/Auth/Logout";
 import Workspace from "./pages/Workspace/Workspace";
 
 function App() {
@@ -24,7 +25,11 @@ function App() {
             element: <Register />,
         },
         {
-            path: "/user",
+            path: "/logout",
+            element: <Logout />,
+        },
+        {
+            path: "/:username",
             element: <Workspace />,
         },
     ]);

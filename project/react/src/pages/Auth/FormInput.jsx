@@ -1,6 +1,6 @@
-function FormInput({ label, name, type, placeholder, value, onChange }) {
+function FormInput({ label, name, type, placeholder, value, error, onChange }) {
     return (
-        <>
+        <div className="form-control">
             <label htmlFor={name}>{label}</label>
             <input
                 type={type}
@@ -11,7 +11,8 @@ function FormInput({ label, name, type, placeholder, value, onChange }) {
                 onChange={onChange}
                 required
             />
-        </>
+            {error && <span>{error.msg}</span>}
+        </div>
     );
 }
 

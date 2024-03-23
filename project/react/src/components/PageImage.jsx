@@ -1,30 +1,28 @@
+import { useContext } from "react";
+import { WorkspaceContext } from "../context/WorkspaceContext";
 import { useState, useRef } from "react";
-import { headers } from "../config/fetchHeaders";
 import "./page-image.css";
 
 export default function PageImage({ src }) {
-    const [imageSrc, setImgSrc] = useState(src);
+    const { saveChange } = useContext(WorkspaceContext);
     const [onHover, setOnHover] = useState(false);
     const [showToolbar, setShowToolbar] = useState(false);
 
     const handleCover = async (type, src) => {
-        const data = {
-            target: "background",
-            type,
-            src,
-        };
-        const res = await fetch("http://127.0.0.1:8000/api/pages/1", {
-            method: "put",
-            headers,
-            body: JSON.stringify(data),
-        });
-        const message = await res.json();
-        console.log(message);
+        saveChange("cover", src);
     };
+
+    const styles = src
+        ? { backgroundImage: `url(${src})` }
+        : {
+              backgroundColor: "#FFE53B",
+              backgroundImage:
+                  "linear-gradient(147deg, #FFE53B 0%, #FF2525 74%)",
+          };
 
     return (
         <div
-            style={{ backgroundImage: `url(${imageSrc})` }}
+            style={styles}
             onMouseOver={() => setOnHover(true)}
             onMouseOut={() => setOnHover(false)}
             className="background"
@@ -38,7 +36,6 @@ export default function PageImage({ src }) {
             )}
             {showToolbar && (
                 <CoverToolbar
-                    setImgSrc={setImgSrc}
                     setShowToolbar={setShowToolbar}
                     setOnHover={setOnHover}
                     handleCover={handleCover}
@@ -48,7 +45,7 @@ export default function PageImage({ src }) {
     );
 }
 
-function CoverToolbar({ setImgSrc, setShowToolbar, setOnHover, handleCover }) {
+function CoverToolbar({ setShowToolbar, setOnHover, handleCover }) {
     const [tab, setTab] = useState(1);
     const linkInputRef = useRef(null);
 
@@ -60,7 +57,6 @@ function CoverToolbar({ setImgSrc, setShowToolbar, setOnHover, handleCover }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         const url = linkInputRef.current.value;
-        setImgSrc(url);
         setOnHover(false);
         setShowToolbar(false);
         handleCover("link", url);

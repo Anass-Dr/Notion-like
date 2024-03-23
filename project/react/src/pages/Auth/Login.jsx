@@ -41,6 +41,7 @@ function Login() {
         const data = await res.json();
         if (res.status == 200) {
             localStorage.setItem("jwt_token", data.token);
+            localStorage.setItem("user", JSON.stringify(data.user));
             nav("/user");
         }
     };

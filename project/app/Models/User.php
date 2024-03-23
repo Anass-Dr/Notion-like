@@ -23,14 +23,9 @@ class User extends Model
         return $this->hasMany(Notification::class);
     }
 
-    public function workspaces()
+    public function pages()
     {
-        return $this->hasMany(Workspace::class);
-    }
-
-    public function workspacePermissions()
-    {
-        return $this->hasMany(WorkspacePermission::class);
+        return $this->hasMany(Page::class);
     }
 
     protected $hidden = [

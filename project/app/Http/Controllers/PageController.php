@@ -9,8 +9,17 @@ use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
-    public function index()
+    public function index(string $id)
     {
+        $data = [];
+        $pages = Page::where('user_id', $id)->get()->toArray();
+        foreach ($pages as $page) :
+            $blocks = Block::where('page_id', $page['id'])->get()->toArray();
+            $page['blocks'] = $blocks;
+            $data[] = $page;
+        endforeach;
+
+        return response()->json(["success" => true, "data" => $data]);
     }
 
     public function store(Request $request)
@@ -40,6 +49,19 @@ class PageController extends Controller
 
     public function update(string $id, Request $request)
     {
-        $page = Page::find($id);
+        return response()->json(["info" => $request->page]);
+        $page = Page::where('id', $id)->where('user_id', $request->user_id)->first();
+
+        if ($page) {
+            // $page->update();
+            return response()->json([
+                "info" => "Page exist"
+            ]);
+        } else {
+            // Page::create([]);
+            return response()->json([
+                "info" => "Page not exist"
+            ]);
+        }
     }
 }

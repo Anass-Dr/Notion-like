@@ -15,6 +15,7 @@ class Page extends Model
         'cover',
         'active',
         'deleted_at',
+        'user_id'
     ];
 
     public function blocks()
@@ -22,8 +23,8 @@ class Page extends Model
         return $this->hasMany(Block::class);
     }
 
-    public function workspace()
+    public function user()
     {
-        return $this->belongsTo(Workspace::class);
+        return $this->belongsTo(User::class);
     }
 }

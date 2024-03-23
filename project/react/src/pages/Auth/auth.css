@@ -27,6 +27,9 @@
 #auth main form {
     width: 320px;
 }
+#auth main form .form-control {
+    margin-bottom: 12px;
+}
 #auth main form label {
     display: block;
     margin-bottom: 4px;
@@ -43,7 +46,11 @@
     font-size: 15px;
     background-color: rgba(242, 241, 238, 0.6);
     margin-top: 4px;
-    margin-bottom: 12px;
+    margin-bottom: 4px;
+}
+#auth main form span {
+    color: red;
+    font-size: 12px;
 }
 #auth main form button {
     width: 100%;

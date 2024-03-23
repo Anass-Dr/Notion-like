@@ -9,15 +9,17 @@ function Page() {
     const currPage = data.filter((page) => page.active)[0];
 
     const handleTitleChange = (e) => {
-        saveChange("title", e.currentTarget.textContent);
+        const title = e.currentTarget.textContent;
+        if (title !== currPage.title) saveChange("title", title);
     };
 
     return (
         <main>
-            {currPage.cover && <PageImage src={currPage.cover} />}
+            <PageImage src={currPage.cover} />
+
             <div className="head">
                 <span
-                    onKeyUp={handleTitleChange}
+                    onBlur={handleTitleChange}
                     className="title"
                     contentEditable
                 >
