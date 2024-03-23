@@ -2,6 +2,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Auth from "./Auth";
 import FormInput from "./FormInput";
+import { endpoint } from "../../config/fetch";
+import { validateEmail, validatePassword } from "../../services/FormValidator";
 
 function Register() {
     const nav = useNavigate();
@@ -31,18 +33,16 @@ function Register() {
             passwordConfirmation: true,
         });
         let isValid = true;
-        const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
-        const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
 
         if (user.username.length < 3) {
             isValid = false;
             setIsCredentialsValid((prev) => ({ ...prev, username: false }));
         }
-        if (!emailRegex.test(user.email)) {
+        if (!validateEmail(user.email)) {
             isValid = false;
             setIsCredentialsValid((prev) => ({ ...prev, email: false }));
         }
-        if (!passwordRegex.test(user.password)) {
+        if (!validatePassword(user.password)) {
             isValid = false;
             setIsCredentialsValid((prev) => ({ ...prev, password: false }));
         }
@@ -62,7 +62,7 @@ function Register() {
 
         if (!handleInputValidation()) return;
 
-        const res = await fetch("http://127.0.0.1:8000/api/register", {
+        const res = await fetch(`${endpoint}/register`, {
             method: "post",
             headers: {
                 "content-type": "application/json",
