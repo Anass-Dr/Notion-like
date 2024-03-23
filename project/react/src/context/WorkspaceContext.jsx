@@ -4,29 +4,41 @@ import { headers } from "../config/fetchHeaders";
 export const WorkspaceContext = createContext(null);
 
 export function WorkspaceContextProvider({ children }) {
-    const [data, setData] = useState([
-        {
-            id: 1,
-            title: "Untitled",
-            icon: "",
-            cover: "",
-            active: true,
-            blocks: [],
-        },
-    ]);
+    const [data, setData] = useState([]);
 
+    // Side Effects :
     useEffect(() => {
         const fetchData = async () => {
-            const res = await fetch("http://127.0.0.1:8000/api/pages", {
+            const id = JSON.parse(localStorage.getItem("user")).id;
+            const res = await fetch(`http://127.0.0.1:8000/api/pages/${id}`, {
                 method: "get",
                 headers,
             });
-            const data = await res.json();
-            if (res.status == 200) setData(data);
+            const result = await res.json();
+            if (res.status == 200) setData(result.data);
         };
-        // fetchData();
+        fetchData();
     }, []);
 
+    useEffect(() => {
+        const sendData = async () => {
+            const page = data.filter((page) => page.active)[0];
+            const obj = {
+                page,
+                user_id: JSON.parse(localStorage.getItem("user")).id,
+            };
+            const res = await fetch(`http://127.0.0.1:8000/api/pages/1`, {
+                method: "put",
+                headers,
+                body: JSON.stringify(obj),
+            });
+            const result = await res.json();
+            console.log(result);
+        };
+        sendData();
+    }, [data]);
+
+    // Methods :
     const handleNewPage = () => {
         setData([
             ...data.map((page) => ({ ...page, active: false })),
