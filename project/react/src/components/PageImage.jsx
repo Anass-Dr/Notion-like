@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import { WorkspaceContext } from "../context/WorkspaceContext";
 import { useState, useRef } from "react";
-import { headers } from "../config/fetchHeaders";
 import "./page-image.css";
 
 export default function PageImage({ src }) {
@@ -10,23 +9,20 @@ export default function PageImage({ src }) {
     const [showToolbar, setShowToolbar] = useState(false);
 
     const handleCover = async (type, src) => {
-        const data = {
-            target: "background",
-            type,
-            src,
-        };
-        const res = await fetch("http://127.0.0.1:8000/api/pages/1", {
-            method: "put",
-            headers,
-            body: JSON.stringify(data),
-        });
-        const message = await res.json();
         saveChange("cover", src);
     };
 
+    const styles = src
+        ? { backgroundImage: `url(${src})` }
+        : {
+              backgroundColor: "#FFE53B",
+              backgroundImage:
+                  "linear-gradient(147deg, #FFE53B 0%, #FF2525 74%)",
+          };
+
     return (
         <div
-            style={{ backgroundImage: `url(${src})` }}
+            style={styles}
             onMouseOver={() => setOnHover(true)}
             onMouseOut={() => setOnHover(false)}
             className="background"
