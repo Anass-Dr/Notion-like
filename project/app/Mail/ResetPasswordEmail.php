@@ -37,7 +37,7 @@ class ResetPasswordEmail extends Mailable
         return new Content(
             markdown: 'emails.reset-password',
             with: [
-                'url' => route('password.reset', $this->data['token']),
+                'url' => 'http://localhost:3000/reset-password/' . $this->data['token'],
             ],
         );
     }
