@@ -11,7 +11,7 @@ class GenerateToken
   {
     $payload = [
       'user' => $user,
-      'exp' => time() + 3600,
+      'exp' => time() + 7200,
     ];
     $secretKey = env('JWT_SECRET');
     return JWT::encode($payload, $secretKey, 'HS256');
