@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useContext } from "react";
 import { WorkspaceContext } from "../../../context/WorkspaceContext";
 import NavItem from "../../../components/NavItem";
