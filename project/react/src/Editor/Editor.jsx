@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import PromptBlock from "../components/PromptBlock";
+import { endpoint } from "../config/fetch";
 import "./editor.css";
 
 // Blocks HTML :
@@ -70,7 +71,7 @@ export default function Editor({ blocks, saveChange }) {
     // Side Effects :
     useEffect(() => {
         const fetchBlockTypes = async () => {
-            const res = await fetch("http://127.0.0.1:8000/api/block-types");
+            const res = await fetch(`${endpoint}/block-types`);
             const data = await res.json();
             setBlockTypes(data);
         };
