@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Auth from "./Auth";
 import FormInput from "./FormInput";
+import { endpoint } from "../../config/fetch";
 
 function Login() {
     const [user, setUser] = useState({
@@ -31,7 +32,7 @@ function Login() {
 
     // #- Methods :
     const login = async () => {
-        const res = await fetch("http://127.0.0.1:8000/api/login", {
+        const res = await fetch(`${endpoint}/login`, {
             method: "post",
             headers: {
                 "content-type": "application/json",
@@ -47,7 +48,7 @@ function Login() {
     };
 
     const forgotPassword = async () => {
-        const res = await fetch("http://127.0.0.1:8000/api/forgot-password", {
+        const res = await fetch(`${endpoint}/forgot-password`, {
             method: "post",
             headers: {
                 "content-type": "application/json",
