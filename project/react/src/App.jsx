@@ -4,6 +4,7 @@ import Contact from "./pages/Contact";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import Logout from "./pages/Auth/Logout";
+import ResetPassword from "./pages/Auth/ResetPassword";
 import Workspace from "./pages/Workspace/Workspace";
 
 function App() {
@@ -27,6 +28,10 @@ function App() {
         {
             path: "/logout",
             element: <Logout />,
+        },
+        {
+            path: "/reset-password/:token",
+            element: <ResetPassword />,
         },
         {
             path: "/:username",

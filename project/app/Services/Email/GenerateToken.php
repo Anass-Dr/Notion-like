@@ -4,8 +4,8 @@ namespace App\Services\Email;
 
 class GenerateToken
 {
-  public static function new()
+  public static function new($id)
   {
-    return uniqid() . uniqid();
+    return uniqid() . uniqid() . "@" . $id;
   }
 }

@@ -1,24 +1,30 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { endpoint } from "../../config/fetch";
 import Auth from "./Auth";
 import FormInput from "./FormInput";
-import { endpoint } from "../../config/fetch";
-import { validateEmail, validatePassword } from "../../services/FormValidator";
+import { validatePassword } from "../../services/FormValidator";
 
-function Register() {
-    const nav = useNavigate();
+function ResetPassword() {
+    const { token } = useParams();
     const [user, setUser] = useState({
-        username: "",
-        email: "",
+        id: token.split("@")[1],
         password: "",
         password_confirmation: "",
     });
     const [isCredentialsValid, setIsCredentialsValid] = useState({
-        username: true,
-        email: true,
         password: true,
         passwordConfirmation: true,
     });
+    const nav = useNavigate();
+
+    useEffect(() => {
+        const checkToken = async () => {
+            const res = await fetch(`${endpoint}/reset-password/${token}`);
+            if (res.status !== 200) nav("/login");
+        };
+        checkToken();
+    }, [token, nav]);
 
     const handleInputChange = (e) => {
         const obj = { ...user, [e.target.name]: e.target.value };
@@ -27,21 +33,11 @@ function Register() {
 
     const handleInputValidation = () => {
         setIsCredentialsValid({
-            username: true,
-            email: true,
             password: true,
             passwordConfirmation: true,
         });
         let isValid = true;
 
-        if (user.username.length < 3) {
-            isValid = false;
-            setIsCredentialsValid((prev) => ({ ...prev, username: false }));
-        }
-        if (!validateEmail(user.email)) {
-            isValid = false;
-            setIsCredentialsValid((prev) => ({ ...prev, email: false }));
-        }
         if (!validatePassword(user.password)) {
             isValid = false;
             setIsCredentialsValid((prev) => ({ ...prev, password: false }));
@@ -62,49 +58,21 @@ function Register() {
 
         if (!handleInputValidation()) return;
 
-        const res = await fetch(`${endpoint}/register`, {
+        const res = await fetch(`${endpoint}/reset-password`, {
             method: "post",
             headers: {
                 "content-type": "application/json",
             },
             body: JSON.stringify(user),
         });
-        const data = await res.json();
-
-        if (data.success) return nav("/login");
+        if (res.status == 204) nav("/login");
     };
 
     return (
         <Auth>
             <main>
-                <h2>Sign up</h2>
+                <h2>New Password</h2>
                 <form onSubmit={handleSubmit}>
-                    <FormInput
-                        label="Username"
-                        name="username"
-                        type="text"
-                        placeholder="Enter your username..."
-                        value={user.username}
-                        error={
-                            !isCredentialsValid.username && {
-                                msg: "Username must be at least 3 characters",
-                            }
-                        }
-                        onChange={handleInputChange}
-                    />
-                    <FormInput
-                        label="Email"
-                        name="email"
-                        type="email"
-                        placeholder="Enter your email address..."
-                        value={user.email}
-                        error={
-                            !isCredentialsValid.email && {
-                                msg: "Invalid Email",
-                            }
-                        }
-                        onChange={handleInputChange}
-                    />
                     <FormInput
                         label="Password"
                         name="password"
@@ -132,16 +100,10 @@ function Register() {
                         onChange={handleInputChange}
                     />
                     <button type="submit">Submit</button>
-                    <div className="form-footer">
-                        <p>
-                            Already have an account?{" "}
-                            <Link to="/login">Login</Link>
-                        </p>
-                    </div>
                 </form>
             </main>
         </Auth>
     );
 }
 
-export default Register;
+export default ResetPassword;

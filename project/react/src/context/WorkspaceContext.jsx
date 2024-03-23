@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from "react";
-import { headers } from "../config/fetchHeaders";
+import { headers } from "../config/fetch";
+import { endpoint } from "../config/fetch";
 
 export const WorkspaceContext = createContext(null);
 
@@ -10,7 +11,7 @@ export function WorkspaceContextProvider({ children }) {
     useEffect(() => {
         const fetchData = async () => {
             const id = JSON.parse(localStorage.getItem("user")).id;
-            const res = await fetch(`http://127.0.0.1:8000/api/pages/${id}`, {
+            const res = await fetch(`${endpoint}/pages/${id}`, {
                 method: "get",
                 headers,
             });
@@ -27,7 +28,7 @@ export function WorkspaceContextProvider({ children }) {
                 page,
                 user_id: JSON.parse(localStorage.getItem("user")).id,
             };
-            const res = await fetch(`http://127.0.0.1:8000/api/pages/1`, {
+            const res = await fetch(`${endpoint}/pages/1`, {
                 method: "put",
                 headers,
                 body: JSON.stringify(obj),

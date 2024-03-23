@@ -8,6 +8,7 @@ use App\Models\PasswordToken;
 use App\Models\User;
 use App\Services\Email\GenerateToken as EmailGenerateToken;
 use App\Services\JWT\GenerateToken;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -72,7 +73,7 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if ($user) {
-            $token = EmailGenerateToken::new();
+            $token = EmailGenerateToken::new($user->id);
             PasswordToken::create([
                 "token" => $token,
                 "user_id" => $user->id
@@ -98,16 +99,30 @@ class AuthController extends Controller
 
     public function verifyResetToken(string $token)
     {
+        $user_id = explode("@", $token)[1];
         $passwordToken = PasswordToken::where('token', $token)->first();
 
-        if ($passwordToken) {
-            Session::put('user_id', $passwordToken->user_id);
-            redirect('http://127.0.0.1:3000/reset-password');
+        if ($passwordToken && $user_id == $passwordToken->user_id) {
+            return response()->json([
+                "success" => true,
+                "message" => "Token is valid"
+            ]);
         }
 
         return response()->json([
             "success" => false,
             "message" => "Token expired or not found"
-        ], 404);
+        ], 401);
+    }
+
+    public function resetPassword(Request $request)
+    {
+        try {
+            $user = User::find($request->id);
+            $user->update(["password" => $request->password]);
+            return response()->json(["success" => true, "message" => "Password updated successfuly"], 204);
+        } catch (Exception $e) {
+            return response()->json(["success" => false, "error" => "Something goes wrong"], 500);
+        }
     }
 }
