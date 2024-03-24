@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Block;
-use App\Models\BlockType;
 use App\Models\Page;
 use Illuminate\Http\Request;
 
@@ -24,44 +23,35 @@ class PageController extends Controller
 
     public function store(Request $request)
     {
-        # Create New Page :
-        $page = Page::create([
-            "title" => $request->title,
-            "icon" => $request->icon,
-            "background" => $request->background,
-            "workspace_id" => 1
-        ]);
+        Page::where('user_id', $request->user_id)->update(['active' => false]);
+        $page = Page::create(["user_id" => $request->user_id])->toArray();
+        $page["blocks"] = [];
 
-        foreach ($request->blocks as $block) {
-            # Get Block Type :
-            $block_type = BlockType::where("name", $block['type'])->first();
-
-            # Create New Block :
-            Block::create([
-                "type_id" => $block_type->id,
-                "order" => $block['order'],
-                "content" => $block['data']['text'],
-                "page_id" => $page->id
-            ]);
-        }
-        return response()->json(["message" => "ok"]);
+        return response()->json([
+            "success" => true,
+            "data" => ["page" => $page]
+        ], 201);
     }
 
     public function update(string $id, Request $request)
     {
-        return response()->json(["info" => $request->page]);
         $page = Page::where('id', $id)->where('user_id', $request->user_id)->first();
 
         if ($page) {
-            // $page->update();
+            $page->update([
+                "title" => $request->page['title'],
+                "icon" => $request->page['icon'],
+                "cover" => $request->page['cover'],
+                "active" => $request->page['active']
+            ]);
             return response()->json([
-                "info" => "Page exist"
+                "success" => true
             ]);
         } else {
-            // Page::create([]);
             return response()->json([
-                "info" => "Page not exist"
-            ]);
+                "success" => false,
+                "error" => "Page not found"
+            ], 404);
         }
     }
 }
