@@ -1,11 +1,13 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Auth from "./Auth";
 import FormInput from "./FormInput";
 import { endpoint } from "../../config/fetch";
 import { validateEmail, validatePassword } from "../../services/FormValidator";
+import { ToasterContext } from "../../context/ToasterContext";
 
 function Register() {
+    const notification = useContext(ToasterContext);
     const nav = useNavigate();
     const [user, setUser] = useState({
         username: "",
@@ -70,6 +72,8 @@ function Register() {
             body: JSON.stringify(user),
         });
         const data = await res.json();
+        const notifType = Object.keys(data)[0];
+        notification.add(notifType, data[notifType]);
 
         if (data.success) return nav("/login");
     };
