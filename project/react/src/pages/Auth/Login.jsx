@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Auth from "./Auth";
 import FormInput from "./FormInput";
 import { endpoint } from "../../config/fetch";
+import { ToasterContext } from "../../context/ToasterContext";
 
 function Login() {
+    const toaster = useContext(ToasterContext);
     const [user, setUser] = useState({
         email: "",
         password: "",
@@ -40,6 +42,8 @@ function Login() {
             body: JSON.stringify(user),
         });
         const data = await res.json();
+        const toasterType = Object.keys(data)[0];
+        toaster.add(toasterType, data[toasterType]);
         if (res.status == 200) {
             localStorage.setItem("jwt_token", data.token);
             localStorage.setItem("user", JSON.stringify(data.user));
@@ -56,6 +60,8 @@ function Login() {
             body: JSON.stringify({ email: user.email }),
         });
         const data = await res.json();
+        const toasterType = Object.keys(data)[1];
+        toaster.add(toasterType, data[toasterType]);
     };
 
     return (
