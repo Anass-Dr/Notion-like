@@ -29,21 +29,23 @@ class AuthController extends Controller
             $this->validate($request, $rules);
         } catch (ValidationException $e) {
             return response()->json([
-                "message" => "Validation failed",
-                "errors" => $e->validator->errors()->messages(),
+                "error" => $e->validator->errors()->messages(),
             ], 422);
         }
 
+        # Check Username if exist :
+        $user = User::where('username', $request->username)->first();
+        if ($user) return response()->json(["error" => "username already token"], 401);
+
+        # Check Email if exist :
+        $user = User::where('email', $request->email)->first();
+        if ($user) return response()->json(["error" => "email already token"], 401);
+
         $user = User::create($request->only('username', 'email', 'password'));
-        Page::create([
-            "title" => "Untitled",
-            "active" => true,
-            "user_id" => $user->id
-        ]);
+        Page::create(["user_id" => $user->id]);
 
         return response()->json([
-            "success" => true,
-            "message" => "User registered successfully"
+            "success" => "User registered successfully",
         ], 201);
     }
 
@@ -62,7 +64,7 @@ class AuthController extends Controller
         # - Valid Credentials :
         $token = GenerateToken::new($user);
         return response()->json([
-            "success" => true,
+            "success" => "Welcome " . $user->username,
             "token" => $token,
             "user" => $user
         ], 200);
