@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('pages', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->string('title')->default("Untitled");
             $table->string('icon')->nullable();
             $table->string('cover')->nullable();
-            $table->boolean('active')->default(false);
+            $table->boolean('active')->default(true);
             $table->timestamp('deleted_at')->nullable();
             $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
