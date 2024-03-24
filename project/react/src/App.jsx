@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Contact from "./pages/Contact";
 import Login from "./pages/Auth/Login";
@@ -6,40 +6,29 @@ import Register from "./pages/Auth/Register";
 import Logout from "./pages/Auth/Logout";
 import ResetPassword from "./pages/Auth/ResetPassword";
 import Workspace from "./pages/Workspace/Workspace";
+import Toast from "./components/Toast";
+import { ToasterContextProvider } from "./context/ToasterContext";
 
 function App() {
-    const router = createBrowserRouter([
-        {
-            path: "/",
-            element: <Home />,
-        },
-        {
-            path: "/contact",
-            element: <Contact />,
-        },
-        {
-            path: "/login",
-            element: <Login />,
-        },
-        {
-            path: "/register",
-            element: <Register />,
-        },
-        {
-            path: "/logout",
-            element: <Logout />,
-        },
-        {
-            path: "/reset-password/:token",
-            element: <ResetPassword />,
-        },
-        {
-            path: "/:username",
-            element: <Workspace />,
-        },
-    ]);
-
-    return <RouterProvider router={router} />;
+    return (
+        <ToasterContextProvider>
+            <Router>
+                <Toast />
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/contact" element={<Contact />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/logout" element={<Logout />} />
+                    <Route
+                        path="/reset-password/:token"
+                        element={<ResetPassword />}
+                    />
+                    <Route path="/:username" element={<Workspace />} />
+                </Routes>
+            </Router>
+        </ToasterContextProvider>
+    );
 }
 
 export default App;
