@@ -48,6 +48,9 @@ function Sidebar() {
                     <NavItem title="Trash">
                         <i className="fa-regular fa-trash-can"></i>
                     </NavItem>
+                    <NavItem title="Logout">
+                        <i className="fa-solid fa-arrow-right-from-bracket"></i>
+                    </NavItem>
                 </div>
             </div>
         </div>
