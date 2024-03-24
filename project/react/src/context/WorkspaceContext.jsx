@@ -21,37 +21,21 @@ export function WorkspaceContextProvider({ children }) {
         fetchData();
     }, []);
 
-    useEffect(() => {
-        const sendData = async () => {
-            const page = data.filter((page) => page.active)[0];
-            const obj = {
-                page,
-                user_id: JSON.parse(localStorage.getItem("user")).id,
-            };
-            const res = await fetch(`${endpoint}/pages/1`, {
-                method: "put",
-                headers,
-                body: JSON.stringify(obj),
-            });
-            const result = await res.json();
-            console.log(result);
-        };
-        sendData();
-    }, [data]);
-
     // Methods :
-    const handleNewPage = () => {
-        setData([
-            ...data.map((page) => ({ ...page, active: false })),
-            {
-                id: data.length + 1,
-                title: "Untitled",
-                icon: "",
-                cover: "",
-                active: true,
-                blocks: [],
-            },
-        ]);
+    const handleNewPage = async () => {
+        const res = await fetch(`${endpoint}/pages`, {
+            method: "post",
+            headers,
+            body: JSON.stringify({
+                user_id: JSON.parse(localStorage.getItem("user")).id,
+            }),
+        });
+        const result = await res.json();
+        if (res.status === 201)
+            setData([
+                ...data.map((page) => ({ ...page, active: false })),
+                result.data.page,
+            ]);
     };
 
     const changeActivePage = (id) => {
@@ -64,12 +48,27 @@ export function WorkspaceContextProvider({ children }) {
         );
     };
 
+    const sendData = async (page) => {
+        const obj = {
+            page,
+            user_id: JSON.parse(localStorage.getItem("user")).id,
+        };
+        const res = await fetch(`${endpoint}/pages/${page.id}`, {
+            method: "put",
+            headers,
+            body: JSON.stringify(obj),
+        });
+    };
+
     const saveChange = (key, value) => {
+        const pageObj = {
+            ...data.filter((page) => page.active)[0],
+            [key]: value,
+        };
         setData((prevItems) =>
-            prevItems.map((page) =>
-                page.active ? { ...page, [key]: value } : page
-            )
+            prevItems.map((page) => (page.active ? pageObj : page))
         );
+        sendData(pageObj);
     };
 
     return (
