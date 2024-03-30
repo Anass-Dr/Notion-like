@@ -27,7 +27,7 @@ function Page() {
                 </span>
             </div>
             <div id="editorjs" className="content">
-                <Editor blocks={currPage.blocks} saveChange={saveChange} />
+                <Editor blocksData={currPage.blocks} saveChange={saveChange} />
             </div>
         </main>
     );
