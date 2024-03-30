@@ -1,6 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import { headers } from "../config/fetch";
-import { endpoint } from "../config/fetch";
+import { endpoint, headers } from "../config/fetch";
 
 export const WorkspaceContext = createContext(null);
 
@@ -13,7 +12,7 @@ export function WorkspaceContextProvider({ children }) {
             const id = JSON.parse(localStorage.getItem("user")).id;
             const res = await fetch(`${endpoint}/pages/${id}`, {
                 method: "get",
-                headers,
+                headers: headers(),
             });
             const result = await res.json();
             if (res.status == 200) setData(result.data);
@@ -25,7 +24,7 @@ export function WorkspaceContextProvider({ children }) {
     const handleNewPage = async () => {
         const res = await fetch(`${endpoint}/pages`, {
             method: "post",
-            headers,
+            headers: headers(),
             body: JSON.stringify({
                 user_id: JSON.parse(localStorage.getItem("user")).id,
             }),
@@ -55,7 +54,7 @@ export function WorkspaceContextProvider({ children }) {
         };
         const res = await fetch(`${endpoint}/pages/${page.id}`, {
             method: "put",
-            headers,
+            headers: headers(),
             body: JSON.stringify(obj),
         });
     };
