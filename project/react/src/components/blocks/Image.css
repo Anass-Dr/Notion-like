@@ -1,0 +1,9 @@
+._image {
+    display: flex;
+    align-items: center;
+    background-color: var(--hover-bg);
+    color: var(--text-gray);
+    font-size: 14px;
+    padding: 12px;
+    cursor: pointer;
+}
