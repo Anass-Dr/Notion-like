@@ -2,24 +2,15 @@ import { useState, useEffect, useRef } from "react";
 import PromptBlock from "../components/PromptBlock";
 import { endpoint } from "../config/fetch";
 import "./editor.css";
+import BlockManager from "../components/blocks/BlockManager";
 
-// Blocks HTML :
-const blocksHTML = {
-    Text: '<div class="_paragraph block" data-type="Text" contentEditable></div>',
-    "Heading 1":
-        '<div class="_heading1 block" data-type="Heading 1" contentEditable></div>',
-    "Heading 2":
-        '<div class="_heading2 block" data-type="Heading 2" contentEditable></div>',
-    "Heading 3":
-        '<div class="_heading3 block" data-type="Heading 3" contentEditable></div>',
-};
-
-export default function Editor({ blocks, saveChange }) {
+export default function Editor({ blocksData, saveChange }) {
     const [prompt, setPrompt] = useState(false);
     const [prompt__input, setPromptInput] = useState(true);
     const [prompt_placeholder, setPromptPlaceholder] = useState(true);
     const [cords, setCords] = useState([]);
     const [blockTypes, setBlockTypes] = useState([]);
+    const [blocks, setBlocks] = useState(blocksData);
     const editorRef = useRef(null);
     const promptInputRef = useRef(null);
 
@@ -62,9 +53,20 @@ export default function Editor({ blocks, saveChange }) {
 
     const handleBlockClick = (e) => {
         const type = e.currentTarget.dataset.type;
+        const content = e.currentTarget.textContent;
         setPrompt(false);
         setPromptInput(false);
-        editorRef.current.insertAdjacentHTML("beforeend", blocksHTML[type]);
+        // editorRef.current.insertAdjacentHTML(
+        //     "beforeend",
+        //     handleBlockHTML(type)
+        // );
+        setBlocks((prev) => [
+            ...prev,
+            {
+                type,
+                content,
+            },
+        ]);
         editorRef.current.lastElementChild.focus();
     };
 
@@ -79,16 +81,20 @@ export default function Editor({ blocks, saveChange }) {
     }, []);
 
     useEffect(() => {
-        if (blocks.length) {
-            setPromptInput(false);
-            blocks.map((block) => {
-                editorRef.current.insertAdjacentHTML(
-                    "beforeend",
-                    blockTypes[block.type]
-                );
-            });
-        }
-    }, [blocks, blockTypes]);
+        saveChange("blocks", blocks);
+    }, [blocks]);
+
+    // useEffect(() => {
+    //     if (blocks.length) {
+    //         setPromptInput(false);
+    //         blocks.map((block) => {
+    //             editorRef.current.insertAdjacentHTML(
+    //                 "beforeend",
+    //                 blockTypes[block.type]
+    //             );
+    //         });
+    //     }
+    // }, [blocks, blockTypes]);
 
     useEffect(() => {
         if (promptInputRef.current) {
@@ -98,6 +104,9 @@ export default function Editor({ blocks, saveChange }) {
 
     return (
         <div id="editor" ref={editorRef} onKeyDown={handleChange}>
+            {blocks.map((block, indx) => (
+                <BlockManager key={indx} block={block} />
+            ))}
             {prompt__input && (
                 <div
                     ref={promptInputRef}
