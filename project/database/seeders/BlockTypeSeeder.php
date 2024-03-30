@@ -11,24 +11,29 @@ class BlockTypeSeeder extends Seeder
     public function run(): void
     {
         BlockType::create([
-            "name" => "Text",
+            "name" => "paragraph",
             "description" => "Just start writing with plain text.",
             "image" => "http://127.0.0.1:8000/assets/images/alphabet.png"
         ]);
         BlockType::create([
-            "name" => "Heading 1",
+            "name" => "heading1",
             "description" => "Big section heading.",
             "image" => "http://127.0.0.1:8000/assets/images/header1.png"
         ]);
         BlockType::create([
-            "name" => "Heading 2",
+            "name" => "heading2",
             "description" => "Medium section heading.",
             "image" => "http://127.0.0.1:8000/assets/images/header2.png"
         ]);
         BlockType::create([
-            "name" => "Heading 3",
+            "name" => "heading3",
             "description" => "Small section heading.",
             "image" => "http://127.0.0.1:8000/assets/images/header3.png"
+        ]);
+        BlockType::create([
+            "name" => "image",
+            "description" => "Importez une image, ou intégrez-la avec un lien.",
+            "image" => "http://127.0.0.1:8000/assets/images/block__image.png"
         ]);
     }
 }

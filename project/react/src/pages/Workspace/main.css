@@ -21,6 +21,8 @@
 }
 #user main {
     grid-area: main;
+    display: flex;
+    flex-direction: column;
 }
 
 [contenteditable] {
@@ -49,4 +51,9 @@
 }
 ::-webkit-scrollbar-thumb {
     background: #d3d1cb;
+}
+
+#user main .content {
+    flex-grow: 1;
+    padding-bottom: 2rem;
 }
