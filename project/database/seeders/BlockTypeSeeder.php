@@ -35,5 +35,15 @@ class BlockTypeSeeder extends Seeder
             "description" => "Importez une image, ou intégrez-la avec un lien.",
             "image" => "http://127.0.0.1:8000/assets/images/block__image.png"
         ]);
+        BlockType::create([
+            "name" => "video",
+            "description" => "Embed from YouTube, Vimeo...",
+            "image" => "http://127.0.0.1:8000/assets/images/block__video.png"
+        ]);
+        BlockType::create([
+            "name" => "audio",
+            "description" => "Embed from SoundCloud, Spotify...",
+            "image" => "http://127.0.0.1:8000/assets/images/block__audio.png"
+        ]);
     }
 }
