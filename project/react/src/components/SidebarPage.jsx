@@ -6,7 +6,7 @@ function SidebarPage({ id, title, active }) {
     const { changeActivePage } = useContext(WorkspaceContext);
 
     const handleClick = (e) => {
-        changeActivePage(e.target.dataset.id);
+        changeActivePage(e.currentTarget.dataset.id);
     };
 
     return (
