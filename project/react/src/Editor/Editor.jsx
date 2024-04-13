@@ -1,18 +1,28 @@
 import { useState, useEffect, useRef } from "react";
+import { BlockOptionsContextProvider } from "../context/BlockOptionsContext";
 import PromptBlock from "../components/PromptBlock";
 import { endpoint } from "../config/fetch";
 import "./editor.css";
 import BlockManager from "../components/blocks/BlockManager";
+import BlockOptions from "../components/blocks/BlockOptions/BlockOptions";
 
-export default function Editor({ blocksData, saveChange }) {
+export default function Editor({ blocksData, handleBlocks }) {
     const [prompt, setPrompt] = useState(false);
     const [prompt__input, setPromptInput] = useState(true);
     const [prompt_placeholder, setPromptPlaceholder] = useState(true);
     const [cords, setCords] = useState([]);
     const [blockTypes, setBlockTypes] = useState([]);
-    const [blocks, setBlocks] = useState(blocksData);
     const editorRef = useRef(null);
     const promptInputRef = useRef(null);
+
+    const handleActiveBlock = (id) => {
+        const newState = blocksData.map((block) =>
+            block.id == id
+                ? { ...block, active: true }
+                : { ...block, active: false }
+        );
+        handleBlocks(newState);
+    };
 
     const handleChange = (e) => {
         const editorBlocksNb = editorRef.current.querySelectorAll("div").length;
@@ -25,6 +35,9 @@ export default function Editor({ blocksData, saveChange }) {
             if (e.target.classList.contains("prompt__input")) {
                 if (editorBlocksNb > 1) setPromptInput(false);
             } else {
+                const id = e.target.dataset.id;
+                const newState = blocksData.filter((block) => block.id !== id);
+                handleBlocks(newState);
                 e.target.remove();
                 if (editorBlocksNb <= 1) setPromptInput(true);
             }
@@ -53,21 +66,31 @@ export default function Editor({ blocksData, saveChange }) {
 
     const handleBlockClick = (e) => {
         const type = e.currentTarget.dataset.type;
-        const content = e.currentTarget.textContent;
         setPrompt(false);
         setPromptInput(false);
-        // editorRef.current.insertAdjacentHTML(
-        //     "beforeend",
-        //     handleBlockHTML(type)
-        // );
-        setBlocks((prev) => [
-            ...prev,
+
+        const newState = [
+            ...blocksData.map((block) => ({ ...block, active: false })),
             {
+                id: blocksData.length,
                 type,
-                content,
+                content: "",
+                active: true,
             },
-        ]);
-        editorRef.current.lastElementChild.focus();
+        ];
+        handleBlocks(newState);
+    };
+
+    const handleBlockChange = (content) => {
+        const newState = blocksData.map((block) =>
+            block.active ? { ...block, content } : block
+        );
+        handleBlocks(newState);
+    };
+
+    const handleBlockDelete = (id) => {
+        const newState = blocksData.filter((block) => block.id != id);
+        handleBlocks(newState);
     };
 
     // Side Effects :
@@ -81,51 +104,46 @@ export default function Editor({ blocksData, saveChange }) {
     }, []);
 
     useEffect(() => {
-        saveChange("blocks", blocks);
-    }, [blocks]);
-
-    // useEffect(() => {
-    //     if (blocks.length) {
-    //         setPromptInput(false);
-    //         blocks.map((block) => {
-    //             editorRef.current.insertAdjacentHTML(
-    //                 "beforeend",
-    //                 blockTypes[block.type]
-    //             );
-    //         });
-    //     }
-    // }, [blocks, blockTypes]);
-
-    useEffect(() => {
         if (promptInputRef.current) {
             promptInputRef.current.focus();
         }
     }, [prompt__input]);
 
     return (
-        <div id="editor" ref={editorRef} onKeyDown={handleChange}>
-            {blocks.map((block, indx) => (
-                <BlockManager key={indx} block={block} />
-            ))}
-            {prompt__input && (
-                <div
-                    ref={promptInputRef}
-                    onKeyDown={handlePromptKey}
-                    className={`prompt__input ${
-                        prompt_placeholder ? "prompt__input-after" : ""
-                    }`}
-                    contentEditable
-                ></div>
-            )}
-            {prompt && (
-                <Prompt
-                    top={cords[0]}
-                    left={cords[1]}
-                    types={blockTypes}
-                    handleBlockClick={handleBlockClick}
-                />
-            )}
-        </div>
+        <>
+            <BlockOptionsContextProvider>
+                <div id="editor" ref={editorRef} onKeyDown={handleChange}>
+                    {blocksData.map((block, indx) => (
+                        <BlockManager
+                            key={indx}
+                            block={block}
+                            handleBlock={handleBlockChange}
+                            handleActiveBlock={handleActiveBlock}
+                        />
+                    ))}
+                    {prompt__input && (
+                        <div
+                            ref={promptInputRef}
+                            onKeyDown={handlePromptKey}
+                            className={`prompt__input ${
+                                prompt_placeholder ? "prompt__input-after" : ""
+                            }`}
+                            contentEditable
+                        ></div>
+                    )}
+                    {prompt && (
+                        <Prompt
+                            top={cords[0]}
+                            left={cords[1]}
+                            types={blockTypes}
+                            handleBlockClick={handleBlockClick}
+                        />
+                    )}
+
+                    <BlockOptions handleDelete={handleBlockDelete} />
+                </div>
+            </BlockOptionsContextProvider>
+        </>
     );
 }
 
