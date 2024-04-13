@@ -25,9 +25,6 @@ export function WorkspaceContextProvider({ children }) {
         const res = await fetch(`${endpoint}/pages`, {
             method: "post",
             headers: headers(),
-            body: JSON.stringify({
-                user_id: JSON.parse(localStorage.getItem("user")).id,
-            }),
         });
         const result = await res.json();
         if (res.status === 201)
@@ -48,14 +45,10 @@ export function WorkspaceContextProvider({ children }) {
     };
 
     const sendData = async (page) => {
-        const obj = {
-            page,
-            user_id: JSON.parse(localStorage.getItem("user")).id,
-        };
         const res = await fetch(`${endpoint}/pages/${page.id}`, {
             method: "put",
             headers: headers(),
-            body: JSON.stringify(obj),
+            body: JSON.stringify(page),
         });
     };
 
