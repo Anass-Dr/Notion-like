@@ -33,9 +33,9 @@ function Sidebar() {
                     <div className="private">
                         <span className="group_page">Private</span>
                         <ul>
-                            {data.map((page) => (
+                            {data.map((page, indx) => (
                                 <SidebarPage
-                                    key={page.id}
+                                    key={indx}
                                     id={page.id}
                                     title={page.title}
                                     active={page.active}
