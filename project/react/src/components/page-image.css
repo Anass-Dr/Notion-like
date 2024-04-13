@@ -1,8 +1,13 @@
 .background {
-    height: 300px;
+    flex: 1;
     background-size: cover;
     background-position: center;
     position: relative;
+}
+.background::after {
+    content: "";
+    display: block;
+    padding-top: 35%;
 }
 
 .cover__options {
