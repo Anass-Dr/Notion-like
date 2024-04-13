@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BlockController;
 use App\Http\Controllers\BlockTypeController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +31,7 @@ Route::middleware('jwt.auth')->group(function () {
   Route::post('/pages', [PageController::class, 'store']);
   Route::put('/pages/{id}', [PageController::class, 'update']);
   Route::delete('/pages', [PageController::class, 'destroy']);
+  Route::post('/files/', [FileController::class, "save"]);
 });
 
 Route::get('/block-types', [BlockTypeController::class, 'index']);
