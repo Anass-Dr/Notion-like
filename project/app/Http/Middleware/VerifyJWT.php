@@ -26,6 +26,7 @@ class VerifyJWT
 
         try {
             $decoded = JWT::decode($token, new Key($secretKey, 'HS256'));
+            $request->merge(["user_id" => $decoded->user->id]);
         } catch (\Firebase\JWT\ExpiredException $e) {
             return response()->json(['error' => 'Token expired'], 401);
         } catch (\Firebase\JWT\SignatureInvalidException $e) {
