@@ -39,6 +39,7 @@
     margin-top: 1rem;
     margin-bottom: 4px;
     opacity: 0.9;
+    position: relative;
 }
 ._heading1 {
     font-weight: 600;
