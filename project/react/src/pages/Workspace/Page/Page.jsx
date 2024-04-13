@@ -13,6 +13,8 @@ function Page() {
         if (title !== currPage.title) saveChange("title", title);
     };
 
+    const handleBlocks = (blocks) => saveChange("blocks", blocks);
+
     return (
         <main>
             <PageImage src={currPage.cover} />
@@ -27,7 +29,10 @@ function Page() {
                 </span>
             </div>
             <div id="editorjs" className="content">
-                <Editor blocksData={currPage.blocks} saveChange={saveChange} />
+                <Editor
+                    blocksData={currPage.blocks}
+                    handleBlocks={handleBlocks}
+                />
             </div>
         </main>
     );
