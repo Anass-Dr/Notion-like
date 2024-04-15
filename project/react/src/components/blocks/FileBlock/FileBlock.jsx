@@ -1,10 +1,11 @@
-import { useState, useEffect, useRef, useContext } from "react";
+import { useState, useRef, useContext } from "react";
 import { BlockOptionsContext } from "../../../context/BlockOptionsContext";
 import FileToolbar from "../FileToolbar/FileToolbar";
 import ImageBlock from "../ImageBlock/ImageBlock";
 import VideoBlock from "../VideoBlock/VideoBlock";
 import AudioBlock from "../AudioBlock/AudioBlock";
 import BlockOptionsIcon from "../BlockOptions/BlockOptionsIcon";
+import upload from "../../../config/upload";
 import "./FileBlock.css";
 
 function FileBlock({ block, title, handleBlock, handleActiveBlock, children }) {
@@ -13,8 +14,13 @@ function FileBlock({ block, title, handleBlock, handleActiveBlock, children }) {
     const blockRef = useRef(null);
     const { handleOptions } = useContext(BlockOptionsContext);
 
-    const handleFile = (type, src) => {
+    const handleFile = async (type, src) => {
         if (type === "link") handleBlock(src);
+        else {
+            const result = await upload(src);
+            handleBlock(result.path);
+            setToolbar(false);
+        }
     };
 
     const handleBlockOptionsIcon = (e) => {
