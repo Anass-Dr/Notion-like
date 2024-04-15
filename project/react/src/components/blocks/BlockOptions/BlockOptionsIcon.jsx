@@ -10,7 +10,7 @@ function BlockOptionsIcon({ handleOptions, blockId }) {
     };
 
     return (
-        <div ref={blockRef} className="block__options-icons">
+        <div ref={blockRef} className="block__options-icons" contentEditable="false">
             <span className="add">
                 <i className="fa-solid fa-plus"></i>
             </span>
