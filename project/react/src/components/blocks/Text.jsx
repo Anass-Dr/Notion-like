@@ -1,22 +1,42 @@
-import { useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
+import BlockOptionsIcon from "./BlockOptions/BlockOptionsIcon";
+import { BlockOptionsContext } from "../../context/BlockOptionsContext";
 
-function Text({ id, type, active, handleBlock, handleActiveBlock, children }) {
+function Text({ block, handleBlock, handleActiveBlock, children }) {
+    const [onHover, setOnHover] = useState(false);
+    const { handleOptions } = useContext(BlockOptionsContext);
     const divRef = useRef(null);
 
     useEffect(() => {
-        if (active) divRef.current.focus();
-    }, [active]);
+        if (block.active) divRef.current.focus();
+    }, [block.active]);
+
+    const handleBlockOptionsIcon = (e) => {
+        if (e.type === "mouseenter") {
+            setOnHover(true);
+        } else {
+            setOnHover(false);
+        }
+    };
 
     return (
         <div
             ref={divRef}
-            className={`_${type} block`}
-            data-type={`${type}`}
-            data-id={id}
-            onClick={() => handleActiveBlock(id)}
+            className={`_${block.type} block`}
+            data-type={`${block.type}`}
+            data-id={block.id}
+            onClick={() => handleActiveBlock(block.id)}
             onBlur={(e) => handleBlock(e.target.textContent)}
+            onMouseEnter={handleBlockOptionsIcon}
+            onMouseLeave={handleBlockOptionsIcon}
             contentEditable
         >
+            {onHover && (
+                <BlockOptionsIcon
+                    blockId={block.id}
+                    handleOptions={handleOptions}
+                />
+            )}
             {children}
         </div>
     );
