@@ -19,6 +19,7 @@ class FileController extends Controller
 
         $file = $request->file('file');
         $path = Storage::disk('public')->put('uploads', $file);
+        $path = "http://127.0.0.1:8000/storage/" . $path;
         return response()->json([
             'message' => 'File uploaded successfully!',
             'path' => $path,
