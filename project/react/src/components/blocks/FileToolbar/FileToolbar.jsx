@@ -15,6 +15,12 @@ function FileToolbar({ cords, setToolbar, handleFile }) {
         setToolbar(false);
     };
 
+    const handleUpload = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        handleFile("upload", file);
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const url = linkInputRef.current.value;
@@ -50,12 +56,13 @@ function FileToolbar({ cords, setToolbar, handleFile }) {
                 <main>
                     {tab == 1 ? (
                         <div className="upload">
-                            <label className="upload__label" htmlFor="cover">
+                            <label className="upload__label" htmlFor="file">
                                 Upload file
                                 <input
                                     type="file"
-                                    name="upload__cover"
-                                    id="upload__cover"
+                                    name="file"
+                                    id="file"
+                                    onChange={handleUpload}
                                 />
                             </label>
                             <span>The maximum size per file is 5 MB.</span>
