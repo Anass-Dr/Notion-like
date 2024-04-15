@@ -27,10 +27,11 @@ Route::post('/reset-password', [AuthController::class, 'resetPassword']);
 
 Route::middleware('jwt.auth')->group(function () {
   # Page Endpoint :
-  Route::get('/pages/{id}', [PageController::class, 'index']);
+  Route::get('/pages', [PageController::class, 'index']);
   Route::post('/pages', [PageController::class, 'store']);
   Route::put('/pages/{id}', [PageController::class, 'update']);
-  Route::delete('/pages', [PageController::class, 'destroy']);
+  Route::delete('/pages/{id}', [PageController::class, 'destroy']);
+  Route::post('/pages/{id}' , [PageController::class, 'changeActive']);
   Route::post('/files/', [FileController::class, "save"]);
 });
 
