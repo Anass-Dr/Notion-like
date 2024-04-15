@@ -9,9 +9,7 @@ function BlockManager({ block, handleBlock, handleActiveBlock }) {
         case "heading3":
             return (
                 <Text
-                    id={block.id}
-                    active={block.active}
-                    type={block.type}
+                    block={block}
                     handleBlock={handleBlock}
                     handleActiveBlock={handleActiveBlock}
                 >
