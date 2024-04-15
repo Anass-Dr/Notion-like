@@ -1,13 +1,26 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { WorkspaceContext } from "../../../context/WorkspaceContext";
+import PageOptions from "../../../components/PageOptions";
 import "./header.css";
 
 function Header() {
-    const { data } = useContext(WorkspaceContext);
+    const [showOptions, setOptions] = useState(false);
+    const { data, deletePage } = useContext(WorkspaceContext);
     const currPage = data.filter((page) => page.active)[0];
+
+    const handleDelete = () => {
+        deletePage(currPage.id);
+        setOptions(false);
+    }
 
     return (
         <header>
+            {showOptions && (
+                <PageOptions
+                    setOptions={setOptions}
+                    handleDelete={handleDelete}
+                />
+            )}
             <div className="title">
                 <img src="" />
                 <span>{currPage.title}</span>
@@ -23,7 +36,7 @@ function Header() {
                 <li>
                     <i className="fa-regular fa-star"></i>
                 </li>
-                <li>
+                <li onClick={() => setOptions((prev) => !prev)}>
                     <i className="fa-solid fa-ellipsis"></i>
                 </li>
             </ul>
