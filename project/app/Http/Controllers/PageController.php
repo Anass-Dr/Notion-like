@@ -5,14 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Block;
 use App\Models\BlockType;
 use App\Models\Page;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
-    public function index(string $id)
+    public function index(Request $request)
     {
         $data = [];
-        $pages = Page::where('user_id', $id)->get()->toArray();
+        $pages = Page::where('user_id', $request->user_id)->where('deleted_at', null)->get()->toArray();
         foreach ($pages as $page) :
             $blocks = Block::where('page_id', $page['id'])->get()->toArray();
             for ($i = 0; $i < count($blocks); $i++):
@@ -70,5 +71,24 @@ class PageController extends Controller
                 "error" => "Page not found"
             ], 404);
         }
+    }
+
+    public function destroy (string $id, Request $request) {
+        $page = Page::find($id)->update(['deleted_at' => Carbon::now()->utc(), 'active' => false]);
+
+        if($page) {
+            Page::find($request->active_id)->update(['active' => true]);
+            return response()->json(['message' => 'page deleted successfully'], 202);
+        }
+
+        return response()->json(['message' => 'page not found'], 404);
+    }
+
+    public function changeActive (string $id, Request $request) {
+        # - Set active to false for all pages :
+        Page::where('user_id', $request->user_id)->update(['active' => false]);
+
+        Page::find($id)->update(['active' => true]);
+        return response()->json(["message" => "Active page updated successfuly"]);
     }
 }
