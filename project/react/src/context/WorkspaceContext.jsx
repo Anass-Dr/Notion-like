@@ -9,8 +9,7 @@ export function WorkspaceContextProvider({ children }) {
     // Side Effects :
     useEffect(() => {
         const fetchData = async () => {
-            const id = JSON.parse(localStorage.getItem("user")).id;
-            const res = await fetch(`${endpoint}/pages/${id}`, {
+            const res = await fetch(`${endpoint}/pages`, {
                 method: "get",
                 headers: headers(),
             });
@@ -34,7 +33,7 @@ export function WorkspaceContextProvider({ children }) {
             ]);
     };
 
-    const changeActivePage = (id) => {
+    const changeActivePage = async (id) => {
         setData((prevItems) =>
             prevItems.map((page) =>
                 page.id == id
@@ -42,6 +41,11 @@ export function WorkspaceContextProvider({ children }) {
                     : { ...page, active: false }
             )
         );
+
+        const res = await fetch(`${endpoint}/pages/${id}`, {
+            method: "POST",
+            headers: headers(),
+        });
     };
 
     const sendData = async (page) => {
@@ -63,6 +67,23 @@ export function WorkspaceContextProvider({ children }) {
         sendData(pageObj);
     };
 
+    const deletePage = async (id) => {
+        const newState = data
+            .filter((page) => page.id != id)
+            .map((page, indx) =>
+                indx === 0
+                    ? { ...page, active: true }
+                    : { ...page, active: false }
+            );
+        setData(newState);
+
+        const res = await fetch(`${endpoint}/pages/${id}`, {
+            method: "DELETE",
+            headers: headers(),
+            body: JSON.stringify({ active_id: newState[0].id }),
+        });
+    };
+
     return (
         <WorkspaceContext.Provider
             value={{
@@ -70,6 +91,7 @@ export function WorkspaceContextProvider({ children }) {
                 handleNewPage,
                 saveChange,
                 changeActivePage,
+                deletePage,
             }}
         >
             {children}
