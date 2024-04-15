@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { WorkspaceContext } from "../context/WorkspaceContext";
 import { useState, useRef } from "react";
+import upload from "../config/upload";
 import "./page-image.css";
 
 export default function PageImage({ src }) {
@@ -9,7 +10,13 @@ export default function PageImage({ src }) {
     const [showToolbar, setShowToolbar] = useState(false);
 
     const handleCover = async (type, src) => {
-        saveChange("cover", src);
+        if (type === "link") saveChange("cover", src);
+        else {
+            const result = await upload(src);
+            saveChange("cover", result.path);
+            showToolbar(false);
+            onHover(false);
+        }
     };
 
     const styles = src
@@ -62,6 +69,12 @@ function CoverToolbar({ setShowToolbar, setOnHover, handleCover }) {
         handleCover("link", url);
     };
 
+    const handleUpload = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        handleCover("upload", file);
+    };
+
     return (
         <div className="cover__toolbar">
             <div className="offset" onClick={handleClick}></div>
@@ -90,12 +103,16 @@ function CoverToolbar({ setShowToolbar, setOnHover, handleCover }) {
                 <main>
                     {tab == 1 ? (
                         <div className="upload">
-                            <label className="upload__label" htmlFor="cover">
+                            <label
+                                className="upload__label"
+                                htmlFor="upload__cover"
+                            >
                                 Upload file
                                 <input
                                     type="file"
                                     name="upload__cover"
                                     id="upload__cover"
+                                    onChange={handleUpload}
                                 />
                             </label>
                             <span>
