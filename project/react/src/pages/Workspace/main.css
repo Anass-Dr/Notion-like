@@ -45,13 +45,15 @@
 /* Customizing the Scrollbar : */
 ::-webkit-scrollbar {
     background: transparent;
-    width: 10px;
+    width: 8px;
     height: 10px;
+    border-radius: 4px;
 }
 ::-webkit-scrollbar-track {
-    background: #edece9;
+    background: transparent;
 }
 ::-webkit-scrollbar-thumb {
+    border-radius: 4px;
     background: #d3d1cb;
 }
 
