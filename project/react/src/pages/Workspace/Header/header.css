@@ -10,9 +10,13 @@ header .title {
 }
 header #options {
     display: inherit;
-    gap: 1rem;
     font-size: 14px;
 }
 header #options li {
+    padding: 6px 8px;
+    border-radius: 4px;
     cursor: pointer;
+}
+header #options li:hover {
+    background-color: var(--active-bg);
 }
