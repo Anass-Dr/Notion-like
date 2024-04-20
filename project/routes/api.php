@@ -5,6 +5,7 @@ use App\Http\Controllers\BlockController;
 use App\Http\Controllers\BlockTypeController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\PublicPageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,6 +34,10 @@ Route::middleware('jwt.auth')->group(function () {
   Route::delete('/pages/{id}', [PageController::class, 'destroy']);
   Route::post('/pages/{id}' , [PageController::class, 'changeActive']);
   Route::post('/files/', [FileController::class, "save"]);
+  Route::post('/public-pages/{page:id}', [PublicPageController::class, 'store']);
+  Route::get('/public-pages/id/{page:id}', [PublicPageController::class, 'check']);
+  Route::delete('/public-pages/{publicPage:token}', [PublicPageController::class, 'unpublish']);
 });
 
 Route::get('/block-types', [BlockTypeController::class, 'index']);
+Route::get('/public-pages/{token}', [PublicPageController::class, 'get']);
