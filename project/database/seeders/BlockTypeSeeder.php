@@ -50,5 +50,10 @@ class BlockTypeSeeder extends Seeder
             "description" => "Embed from Youtube",
             "image" => "http://127.0.0.1:8000/assets/images/block__youtube.svg"
         ]);
+        BlockType::create([
+            "name" => "code",
+            "description" => "Capture a code snippet.",
+            "image" => "http://127.0.0.1:8000/assets/images/block__code.png"
+        ]);
     }
 }
