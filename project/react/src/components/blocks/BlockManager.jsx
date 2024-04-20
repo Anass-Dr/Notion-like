@@ -1,7 +1,14 @@
 import Text from "./Text";
 import FileBlock from "./FileBlock/FileBlock";
+import CodeBlock from "./Code/CodeBlock";
 
-function BlockManager({ block, handleBlock, handleActiveBlock, handleBlockDelete, showPrompt }) {
+function BlockManager({
+    block,
+    handleBlock,
+    handleActiveBlock,
+    handleBlockDelete,
+    showPrompt,
+}) {
     switch (block.type) {
         case "paragraph":
         case "heading1":
@@ -106,6 +113,8 @@ function BlockManager({ block, handleBlock, handleActiveBlock, handleBlockDelete
                     />
                 </FileBlock>
             );
+        case "code":
+            return <CodeBlock block={block} handleBlock={handleBlock} handleActiveBlock={handleActiveBlock} />;
     }
 }
 
