@@ -1,0 +1,17 @@
+#public-page__cover {
+    height: 240px;
+    background-size: cover;
+    background-position: center;
+}
+#public-page__content {
+    padding: 40px 80px;
+    color: var(--text-dark);
+}
+#public-page__head {
+    margin-bottom: 2rem;
+    font-weight: 700;
+}
+#public-page__title {
+    color: rgb(55, 53, 47);
+    font-size: 40px;
+}
