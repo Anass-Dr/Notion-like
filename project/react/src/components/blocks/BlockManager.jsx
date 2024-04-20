@@ -1,7 +1,7 @@
 import Text from "./Text";
 import FileBlock from "./FileBlock/FileBlock";
 
-function BlockManager({ block, handleBlock, handleActiveBlock }) {
+function BlockManager({ block, handleBlock, handleActiveBlock, handleBlockDelete, showPrompt }) {
     switch (block.type) {
         case "paragraph":
         case "heading1":
@@ -12,6 +12,8 @@ function BlockManager({ block, handleBlock, handleActiveBlock }) {
                     block={block}
                     handleBlock={handleBlock}
                     handleActiveBlock={handleActiveBlock}
+                    handleBlockDelete={handleBlockDelete}
+                    showPrompt={showPrompt}
                 >
                     {block.content}
                 </Text>
@@ -88,6 +90,20 @@ function BlockManager({ block, handleBlock, handleActiveBlock }) {
                     >
                         <path d="M5.258 14.008a.661.661 0 01-.485-.203.702.702 0 01-.195-.492v-2.899c0-.187.065-.351.195-.492a.65.65 0 01.485-.211.67.67 0 01.5.21.694.694 0 01.203.493v2.899a.687.687 0 01-.203.492.68.68 0 01-.5.203zm2.695 3.148a.684.684 0 01-.688-.695V7.266c0-.193.066-.357.196-.493a.66.66 0 01.492-.21c.198 0 .362.07.492.21a.67.67 0 01.203.493v9.195a.67.67 0 01-.203.492.654.654 0 01-.492.203zm2.688 3.032a.645.645 0 01-.485-.204.667.667 0 01-.195-.492V4.234c0-.198.065-.364.195-.5a.645.645 0 01.485-.203.68.68 0 01.5.203.68.68 0 01.203.5v15.258a.654.654 0 01-.203.492.68.68 0 01-.5.203zm2.695-4.047a.684.684 0 01-.492-.196.684.684 0 01-.196-.492v-7.18a.684.684 0 01.688-.695.67.67 0 01.492.203.67.67 0 01.203.492v7.18a.684.684 0 01-.695.688zm2.695 2.328a.68.68 0 01-.695-.696V5.953c0-.193.065-.357.195-.492a.667.667 0 01.5-.211c.193 0 .354.07.485.21a.67.67 0 01.203.493v11.82a.67.67 0 01-.203.493.645.645 0 01-.485.203zm2.688-3.852a.654.654 0 01-.492-.203.675.675 0 01-.196-.484V9.797c0-.188.065-.35.196-.485.13-.14.294-.21.492-.21a.66.66 0 01.492.21.661.661 0 01.203.485v4.133a.661.661 0 01-.203.484.67.67 0 01-.492.203z"></path>
                     </svg>
+                </FileBlock>
+            );
+        case "youtube":
+            return (
+                <FileBlock
+                    block={block}
+                    title="Add a youtube video"
+                    handleBlock={handleBlock}
+                    handleActiveBlock={handleActiveBlock}
+                >
+                    <img
+                        src="http://127.0.0.1:8000/assets/images/block__youtube.svg"
+                        alt="youtube_icon"
+                    />
                 </FileBlock>
             );
     }
