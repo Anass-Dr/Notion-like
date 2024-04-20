@@ -4,9 +4,11 @@ import Auth from "./Auth";
 import FormInput from "./FormInput";
 import { endpoint } from "../../config/fetch";
 import { ToasterContext } from "../../context/ToasterContext";
+import { AuthContext } from "../../context/AuthContext";
 
 function Login() {
     const toaster = useContext(ToasterContext);
+    const auth = useContext(AuthContext);
     const [user, setUser] = useState({
         email: "",
         password: "",
@@ -47,7 +49,8 @@ function Login() {
         if (res.status == 200) {
             localStorage.setItem("jwt_token", data.token);
             localStorage.setItem("user", JSON.stringify(data.user));
-            nav("/user");
+            auth.login();
+            nav(`/${data.user.username.toLowerCase()}`);
         }
     };
 
