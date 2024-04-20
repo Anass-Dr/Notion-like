@@ -8,6 +8,8 @@ import ResetPassword from "./pages/Auth/ResetPassword";
 import Workspace from "./pages/Workspace/Workspace";
 import Toast from "./components/Toast";
 import { ToasterContextProvider } from "./context/ToasterContext";
+import PublicPage from "./pages/PublicPage/PublicPage";
+import NotFound from "./pages/NotFound/NotFound";
 
 function App() {
     return (
@@ -25,6 +27,8 @@ function App() {
                         element={<ResetPassword />}
                     />
                     <Route path="/:username" element={<Workspace />} />
+                    <Route path="/pages/:token" element={<PublicPage />} />
+                    <Route path="/Not-found" element={<NotFound />} />
                 </Routes>
             </Router>
         </ToasterContextProvider>
