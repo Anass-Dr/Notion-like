@@ -7,6 +7,7 @@ import AudioBlock from "../AudioBlock/AudioBlock";
 import BlockOptionsIcon from "../BlockOptions/BlockOptionsIcon";
 import upload from "../../../config/upload";
 import "./FileBlock.css";
+import YoutubeBlock from "../YoutubeBlock/YoutubeBlock";
 
 function FileBlock({ block, title, handleBlock, handleActiveBlock, children }) {
     const [showToolbar, setToolbar] = useState(false);
@@ -42,6 +43,9 @@ function FileBlock({ block, title, handleBlock, handleActiveBlock, children }) {
             break;
         case "audio":
             element = <AudioBlock src={block.content} />;
+            break;
+        case "youtube":
+            element = <YoutubeBlock src={block.content} />;
             break;
     }
 
