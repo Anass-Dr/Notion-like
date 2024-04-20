@@ -12,7 +12,6 @@ export default function Editor({ blocksData, handleBlocks }) {
     const [prompt_placeholder, setPromptPlaceholder] = useState(true);
     const [cords, setCords] = useState([]);
     const [blockTypes, setBlockTypes] = useState([]);
-    const editorRef = useRef(null);
     const promptInputRef = useRef(null);
 
     const handleActiveBlock = (id) => {
@@ -24,24 +23,10 @@ export default function Editor({ blocksData, handleBlocks }) {
         handleBlocks(newState);
     };
 
-    const handleChange = (e) => {
-        const editorBlocksNb = editorRef.current.querySelectorAll("div").length;
-        if (e.key == "Enter") {
-            e.preventDefault();
-            setPrompt(false);
-            setPromptInput(true);
-            setPromptPlaceholder(true);
-        } else if (e.key == "Backspace" && e.target.textContent.length == 0) {
-            if (e.target.classList.contains("prompt__input")) {
-                if (editorBlocksNb > 1) setPromptInput(false);
-            } else {
-                const id = e.target.dataset.id;
-                const newState = blocksData.filter((block) => block.id !== id);
-                handleBlocks(newState);
-                e.target.remove();
-                if (editorBlocksNb <= 1) setPromptInput(true);
-            }
-        }
+    const handlePromptDisplay = () => {
+        setPrompt(false);
+        setPromptInput(true);
+        setPromptPlaceholder(true);
     };
 
     const handlePromptPlacholder = (e) => {
@@ -50,6 +35,8 @@ export default function Editor({ blocksData, handleBlocks }) {
             const cords = e.target.getBoundingClientRect();
             setCords([+cords.top + 30, cords.left]);
             setPrompt(true);
+        } else if (e.key === "Backspace" && e.currentTarget.textContent.length == 0) {
+            setPromptInput(false);
         } else {
             setPromptPlaceholder(true);
             setPrompt(false);
@@ -112,13 +99,15 @@ export default function Editor({ blocksData, handleBlocks }) {
     return (
         <>
             <BlockOptionsContextProvider>
-                <div id="editor" ref={editorRef} onKeyDown={handleChange}>
+                <div id="editor">
                     {blocksData.map((block, indx) => (
                         <BlockManager
                             key={indx}
                             block={block}
                             handleBlock={handleBlockChange}
                             handleActiveBlock={handleActiveBlock}
+                            handleBlockDelete={handleBlockDelete}
+                            showPrompt={handlePromptDisplay}
                         />
                     ))}
                     {prompt__input && (
