@@ -10,28 +10,30 @@ import Toast from "./components/Toast";
 import { ToasterContextProvider } from "./context/ToasterContext";
 import PublicPage from "./pages/PublicPage/PublicPage";
 import NotFound from "./pages/NotFound/NotFound";
+import { AuthContextProvider } from "./context/AuthContext";
 
 function App() {
     return (
-        <ToasterContextProvider>
-            <Router>
-                <Toast />
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/contact" element={<Contact />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
-                    <Route path="/logout" element={<Logout />} />
-                    <Route
-                        path="/reset-password/:token"
-                        element={<ResetPassword />}
-                    />
-                    <Route path="/:username" element={<Workspace />} />
-                    <Route path="/pages/:token" element={<PublicPage />} />
-                    <Route path="/Not-found" element={<NotFound />} />
-                </Routes>
-            </Router>
-        </ToasterContextProvider>
+        <AuthContextProvider>
+            <ToasterContextProvider>
+                <Router>
+                    <Toast />
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/register" element={<Register />} />
+                        <Route path="/logout" element={<Logout />} />
+                        <Route
+                            path="/reset-password/:token"
+                            element={<ResetPassword />}
+                        />
+                        <Route path="/:username" element={<Workspace />} />
+                        <Route path="/pages/:token" element={<PublicPage />} />
+                        <Route path="/Not-found" element={<NotFound />} />
+                    </Routes>
+                </Router>
+            </ToasterContextProvider>
+        </AuthContextProvider>
     );
 }
 
