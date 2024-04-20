@@ -1,12 +1,18 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 export const AuthContext = createContext(null);
 
 export function AuthContextProvider({ children }) {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        if (localStorage.getItem("jwt_token")) setIsLoggedIn(true);
+        setLoading(false);
+    }, []);
 
     const login = () => {
-        console.log("working");
+        setIsLoggedIn(true);
     };
 
     const register = () => {};
@@ -14,7 +20,7 @@ export function AuthContextProvider({ children }) {
     const logout = () => {};
 
     return (
-        <AuthContext.Provider value={(isLoggedIn, login, register, logout)}>
+        <AuthContext.Provider value={{ loading, isLoggedIn, login, register, logout }}>
             {children}
         </AuthContext.Provider>
     );
