@@ -20,3 +20,17 @@ header #options li {
 header #options li:hover {
     background-color: var(--active-bg);
 }
+
+.header_bar {
+    display: none;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 530px) {
+    .header_icons {
+        display: none;
+    }
+    .header_bar {
+        display: block;
+    }
+}

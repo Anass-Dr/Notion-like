@@ -19,3 +19,15 @@ main #prompt_input {
     color: inherit;
     background-color: var(--bg-dark);
 }
+
+@media screen and (max-width: 530px) {
+    main .content {
+        padding: 0 20px;
+    }
+    main .head {
+        padding: 20px 20px 0;
+    }
+    main .title {
+        font-size: 32px;
+    }
+}

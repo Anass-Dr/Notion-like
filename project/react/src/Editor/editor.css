@@ -53,3 +53,15 @@
     font-weight: 600;
     font-size: 20px;
 }
+
+@media screen and (max-width: 530px) {
+    ._heading1 {
+        font-size: 24px;
+    }
+    ._heading2 {
+        font-size: 20px;
+    }
+    ._heading3 {
+        font-size: 18px;
+    }
+}

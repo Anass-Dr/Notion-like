@@ -61,3 +61,12 @@
     flex-grow: 1;
     padding-bottom: 300px;
 }
+
+@media screen and (max-width: 530px) {
+    #user .container {
+        grid-template-areas:
+            "header"
+            "main";
+        grid-template-columns: 1fr;
+    }
+}
