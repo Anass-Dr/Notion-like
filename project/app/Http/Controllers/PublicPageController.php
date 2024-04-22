@@ -36,6 +36,7 @@ class PublicPageController extends Controller
             for ($i = 0; $i < count($blocks); $i++):
                 $type = BlockType::find($blocks[$i]['type_id']);
                 $blocks[$i]['type'] = $type->name;
+                if ($type->name === "code") $blocks[$i]['content'] = json_decode($blocks[$i]['content']);
             endfor;
             $page['blocks'] = $blocks;
         return response()->json(["data" => $page]);
