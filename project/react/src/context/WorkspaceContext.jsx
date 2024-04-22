@@ -84,6 +84,20 @@ export function WorkspaceContextProvider({ children }) {
         });
     };
 
+    const handlePageRestore = async (id) => {
+        const res = await fetch(`${endpoint}/pages/restore/${id}`, {
+            method: "GET",
+            headers: headers(),
+        });
+    };
+    
+    const handlePageDelete = async (id) => {
+        const res = await fetch(`${endpoint}/pages/delete/${id}`, {
+            method: "DELETE",
+            headers: headers(),
+        });
+    };
+
     return (
         <WorkspaceContext.Provider
             value={{
@@ -92,6 +106,8 @@ export function WorkspaceContextProvider({ children }) {
                 saveChange,
                 changeActivePage,
                 deletePage,
+                handlePageRestore,
+                handlePageDelete
             }}
         >
             {children}
