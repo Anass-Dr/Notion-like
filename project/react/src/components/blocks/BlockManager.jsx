@@ -1,6 +1,6 @@
 import Text from "./Text";
 import FileBlock from "./FileBlock/FileBlock";
-import CodeBlock from "./Code/CodeBlock";
+import CodeBlock from "./CodeBlock/CodeBlock";
 
 function BlockManager({
     block,
