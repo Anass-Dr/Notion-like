@@ -33,7 +33,13 @@ Route::middleware('jwt.auth')->group(function () {
   Route::put('/pages/{id}', [PageController::class, 'update']);
   Route::delete('/pages/{id}', [PageController::class, 'destroy']);
   Route::post('/pages/{id}' , [PageController::class, 'changeActive']);
+  Route::get('/pages/trash' , [PageController::class, 'getTrash']);
+  Route::get('/pages/restore/{page:id}' , [PageController::class, 'restore']);
+  Route::delete('/pages/delete/{page:id}' , [PageController::class, 'deletePermanently']);
+
   Route::post('/files/', [FileController::class, "save"]);
+
+  # Public Page Endpoint :
   Route::post('/public-pages/{page:id}', [PublicPageController::class, 'store']);
   Route::get('/public-pages/id/{page:id}', [PublicPageController::class, 'check']);
   Route::delete('/public-pages/{publicPage:token}', [PublicPageController::class, 'unpublish']);
