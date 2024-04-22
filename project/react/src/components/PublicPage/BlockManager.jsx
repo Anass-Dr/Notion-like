@@ -3,6 +3,7 @@ import ImageBlock from "../blocks/ImageBlock/ImageBlock";
 import AudioBlock from "../blocks/AudioBlock/AudioBlock";
 import YoutubeBlock from "../blocks/YoutubeBlock/YoutubeBlock";
 import VideoBlock from "../blocks/VideoBlock/VideoBlock";
+import CodeBlock from "./CodeBlock";
 
 function BlockManager({ block }) {
     switch (block.type) {
@@ -19,6 +20,8 @@ function BlockManager({ block }) {
             return <AudioBlock src={block.content} />;
         case "youtube":
             return <YoutubeBlock src={block.content} />;
+        case "code":
+            return <CodeBlock content={block.content} />;
     }
 }
 
