@@ -1,40 +1,38 @@
 import { useContext, useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { WorkspaceContext } from "../../../context/WorkspaceContext";
-import { endpoint, headers } from "../../../config/fetch";
 import NavItem from "../../../components/NavItem";
 import SidebarPage from "../../../components/SidebarPage";
 import "./sidebar.css";
 import SearchSelect from "../../../components/SearchSelect/SearchSelect";
 
-function Sidebar() {
-    const { data, handleNewPage, handlePageRestore, handlePageDelete } = useContext(WorkspaceContext);
+function Sidebar({ showSidebar, setSidebar }) {
+    const {
+        data,
+        trashItems,
+        handleNewPage,
+        handlePageRestore,
+        handlePageDelete,
+    } = useContext(WorkspaceContext);
     const [showTrashPrompt, setTrashPrompt] = useState(false);
-    const [trashItems, setTrashItems] = useState([]);
     const nav = useNavigate();
     const sidebarRef = useRef();
 
-    useEffect(() => {
-        const getTrashData = async () => {
-            const res = await fetch(`${endpoint}/pages/trash`, {
-                method: "GET",
-                headers: headers(),
-            });
-            const result = await res.json();
-            setTrashItems(result.data);
-        };
-        getTrashData();
-    });
-
     const changePage = () => handleNewPage();
     const handleTrashPrompt = () => setTrashPrompt((prev) => !prev);
+    const hideSidebar = () => setSidebar(false);
 
     return (
         <>
-            <div id="sidebar" ref={sidebarRef}>
+            <div
+                id="sidebar"
+                className={`${showSidebar ? "" : "hide-sidebar"}`}
+                ref={sidebarRef}
+            >
                 <div className="workspace">
                     <span id="icon">A</span>
                     <span>Anass&#39;s Notion</span>
+                    <i onClick={hideSidebar} className="fa-solid fa-xmark"></i>
                 </div>
                 <ul className="head">
                     <NavItem title="Search">

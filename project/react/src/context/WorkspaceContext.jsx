@@ -5,6 +5,7 @@ export const WorkspaceContext = createContext(null);
 
 export function WorkspaceContextProvider({ children }) {
     const [data, setData] = useState([]);
+    const [trashItems, setTrashItems] = useState([]);
 
     // Side Effects :
     useEffect(() => {
@@ -17,6 +18,18 @@ export function WorkspaceContextProvider({ children }) {
             if (res.status == 200) setData(result.data);
         };
         fetchData();
+    }, [trashItems]);
+
+    useEffect(() => {
+        const getTrashData = async () => {
+            const res = await fetch(`${endpoint}/pages/trash`, {
+                method: "GET",
+                headers: headers(),
+            });
+            const result = await res.json();
+            setTrashItems(result.data);
+        };
+        getTrashData();
     }, []);
 
     // Methods :
@@ -82,6 +95,10 @@ export function WorkspaceContextProvider({ children }) {
             headers: headers(),
             body: JSON.stringify({ active_id: newState[0].id }),
         });
+        setTrashItems((prev) => [
+            ...prev,
+            { id, title: data.filter((page) => page.id == id)[0].title },
+        ]);
     };
 
     const handlePageRestore = async (id) => {
@@ -89,25 +106,30 @@ export function WorkspaceContextProvider({ children }) {
             method: "GET",
             headers: headers(),
         });
+        if (res.status == 200)
+            setTrashItems((prev) => prev.filter((page) => page.id != id));
     };
-    
+
     const handlePageDelete = async (id) => {
         const res = await fetch(`${endpoint}/pages/delete/${id}`, {
             method: "DELETE",
             headers: headers(),
         });
+        if (res.status == 200)
+            setTrashItems((prev) => prev.filter((page) => page.id != id));
     };
 
     return (
         <WorkspaceContext.Provider
             value={{
                 data,
+                trashItems,
                 handleNewPage,
                 saveChange,
                 changeActivePage,
                 deletePage,
                 handlePageRestore,
-                handlePageDelete
+                handlePageDelete,
             }}
         >
             {children}
