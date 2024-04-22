@@ -19,6 +19,7 @@ class PageController extends Controller
             for ($i = 0; $i < count($blocks); $i++):
                 $type = BlockType::find($blocks[$i]['type_id']);
                 $blocks[$i]['type'] = $type->name;
+                if ($type->name === "code") $blocks[$i]['content'] = json_decode($blocks[$i]['content']);
             endfor;
             $page['blocks'] = $blocks;
             $data[] = $page;
@@ -45,23 +46,27 @@ class PageController extends Controller
     public function update(string $id, Request $request)
     {
         $page = Page::find($id);
-
+        
         if ($page) {
             $page->update($request->all());
             # - Delete All blocks :
             Block::where("page_id", $page->id)->delete();
-
+            
             # - Insert Blocks :
             foreach ($request->blocks as $block):
                 $type = BlockType::where("name", $block['type'])->first();
+                $content = "";
+                if ($block['content'] && $type->name === "code") $content = json_encode($block['content']);
+                else $content = $block['content'] ?? "";
+
                 Block::create([
-                    "content" => $block['content'] ?? "",
+                    "content" => $content,
                     "page_id" => $page->id,
                     "order" => 1,
                     "type_id" => $type->id
                 ]);
             endforeach;
-
+            
             return response()->json([
                 "success" => true
             ]);
@@ -90,5 +95,20 @@ class PageController extends Controller
 
         Page::find($id)->update(['active' => true]);
         return response()->json(["message" => "Active page updated successfuly"]);
+    }
+
+    public function getTrash () {
+        $pages = Page::whereNotNull('deleted_at')->get();
+        return response()->json(["data" => $pages]);
+    }
+
+    public function restore (Page $page) {
+        $page->update(["deleted_at" => null]);
+        return response()->json(["message" => "Page restored successfuly"]);
+    }
+    
+    public function deletePermanently (Page $page) {
+        $page->delete();
+        return response()->json(["message" => "Page deleted successfuly"], 204);
     }
 }
