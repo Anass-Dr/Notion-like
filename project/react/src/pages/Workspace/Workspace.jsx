@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar/Sidebar";
 import Header from "./Header/Header";
@@ -10,12 +10,12 @@ import { AuthContext } from "../../context/AuthContext";
 import Loading from "../../components/Loading";
 
 function Workspace() {
-    // const nav = useNavigate();
+    const [showSidebar, setSidebar] = useState(false);
     const { loading, isLoggedIn } = useContext(AuthContext);
-    const nav = useNavigate();
     const { username } = useParams();
+    const nav = useNavigate();
 
-    if (loading) return <Loading />
+    if (loading) return <Loading />;
     if (!isLoggedIn) nav("/login");
 
     return (
@@ -23,8 +23,8 @@ function Workspace() {
             <div className="container">
                 <WorkspaceContextProvider>
                     <Wrapper>
-                        <Sidebar />
-                        <Header />
+                        <Sidebar showSidebar={showSidebar} setSidebar={setSidebar} />
+                        <Header showSidebar={setSidebar} />
                         <Page />
                     </Wrapper>
                 </WorkspaceContextProvider>
