@@ -5,7 +5,7 @@ import PageOptions from "../../../components/PageOptions";
 import ShareToolbar from "../../../components/ShareToolbar/ShareToolbar";
 import "./header.css";
 
-function Header() {
+function Header({ showSidebar }) {
     const [showOptions, setOptions] = useState(false);
     const [showShareOptions, setShareOptions] = useState(false);
     const [pagetoken, setPageToken] = useState("");
@@ -20,10 +20,13 @@ function Header() {
 
     useEffect(() => {
         const checkPublicPage = async () => {
-            const res = await fetch(`${endpoint}/public-pages/id/${currPage.id}`, {
-                method: "get",
-                headers: headers(),
-            });
+            const res = await fetch(
+                `${endpoint}/public-pages/id/${currPage.id}`,
+                {
+                    method: "get",
+                    headers: headers(),
+                }
+            );
             const result = await res.json();
             if (res.ok) setPageToken(result.token);
         };
@@ -45,7 +48,7 @@ function Header() {
             headers: headers(),
         });
         if (res.status === 204) setPageToken("");
-    }
+    };
 
     return (
         <>
@@ -56,19 +59,22 @@ function Header() {
                         handleDelete={handleDelete}
                     />
                 )}
+                <div onClick={() => showSidebar(true)} className="header_bar">
+                    <i className="fa-solid fa-bars"></i>
+                </div>
                 <div className="title">
                     <img src="" />
                     <span>{currPage.title}</span>
                 </div>
                 <ul id="options">
                     <li onClick={handleShare}>Share</li>
-                    <li>
+                    <li className="header_icons">
                         <i className="fa-regular fa-message"></i>
                     </li>
-                    <li>
+                    <li className="header_icons">
                         <i className="fa-solid fa-clock-rotate-left"></i>
                     </li>
-                    <li>
+                    <li className="header_icons">
                         <i className="fa-regular fa-star"></i>
                     </li>
                     <li onClick={() => setOptions((prev) => !prev)}>
