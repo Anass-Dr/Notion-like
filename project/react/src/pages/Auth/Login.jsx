@@ -2,12 +2,9 @@ import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Auth from "./Auth";
 import FormInput from "./FormInput";
-import { endpoint } from "../../config/fetch";
-import { ToasterContext } from "../../context/ToasterContext";
 import { AuthContext } from "../../context/AuthContext";
 
 function Login() {
-    const toaster = useContext(ToasterContext);
     const auth = useContext(AuthContext);
     const [user, setUser] = useState({
         email: "",
@@ -35,37 +32,11 @@ function Login() {
     }
 
     // #- Methods :
-    const login = async () => {
-        const res = await fetch(`${endpoint}/login`, {
-            method: "post",
-            headers: {
-                "content-type": "application/json",
-            },
-            body: JSON.stringify(user),
-        });
-        const data = await res.json();
-        const toasterType = Object.keys(data)[0];
-        toaster.add(toasterType, data[toasterType]);
-        if (res.status == 200) {
-            localStorage.setItem("jwt_token", data.token);
-            localStorage.setItem("user", JSON.stringify(data.user));
-            auth.login();
-            nav(`/${data.user.username.toLowerCase()}`);
-        }
+    const login = () => {
+        if (auth.login(user)) nav(`/`);
     };
 
-    const forgotPassword = async () => {
-        const res = await fetch(`${endpoint}/forgot-password`, {
-            method: "post",
-            headers: {
-                "content-type": "application/json",
-            },
-            body: JSON.stringify({ email: user.email }),
-        });
-        const data = await res.json();
-        const toasterType = Object.keys(data)[1];
-        toaster.add(toasterType, data[toasterType]);
-    };
+    const forgotPassword = () => auth.forgotPassword(user.email);
 
     return (
         <Auth>
