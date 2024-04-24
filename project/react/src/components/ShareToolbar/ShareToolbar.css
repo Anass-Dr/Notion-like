@@ -137,3 +137,11 @@
     color: #fff;
     background-color: rgb(35, 131, 226);
 }
+
+@media screen and (max-width: 530px) {
+    .share__toolbar .toolbar {
+        width: 100vw;
+        height: 100vh;
+        left: 0 !important;
+    }
+}
