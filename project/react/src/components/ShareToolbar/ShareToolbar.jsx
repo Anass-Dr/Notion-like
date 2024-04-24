@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./ShareToolbar.css";
 
 function ShareToolbar({ cords, setToolbar, handlePublish, handleUnpublish, token }) {
