@@ -2,13 +2,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
 import Auth from "./Auth";
 import FormInput from "./FormInput";
-import { endpoint } from "../../config/fetch";
 import { validateEmail, validatePassword } from "../../services/FormValidator";
-import { ToasterContext } from "../../context/ToasterContext";
+import { AuthContext } from "../../context/AuthContext";
 
 function Register() {
-    const notification = useContext(ToasterContext);
-    const nav = useNavigate();
+    const auth = useContext(AuthContext);
     const [user, setUser] = useState({
         username: "",
         email: "",
@@ -21,6 +19,7 @@ function Register() {
         password: true,
         passwordConfirmation: true,
     });
+    const nav = useNavigate();
 
     const handleInputChange = (e) => {
         const obj = { ...user, [e.target.name]: e.target.value };
@@ -64,18 +63,7 @@ function Register() {
 
         if (!handleInputValidation()) return;
 
-        const res = await fetch(`${endpoint}/register`, {
-            method: "post",
-            headers: {
-                "content-type": "application/json",
-            },
-            body: JSON.stringify(user),
-        });
-        const data = await res.json();
-        const notifType = Object.keys(data)[0];
-        notification.add(notifType, data[notifType]);
-
-        if (data.success) return nav("/login");
+        if (auth.register(user)) nav("/login");
     };
 
     return (
