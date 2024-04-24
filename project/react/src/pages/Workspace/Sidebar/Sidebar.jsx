@@ -1,19 +1,11 @@
-import { useContext, useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { WorkspaceContext } from "../../../context/WorkspaceContext";
 import NavItem from "../../../components/NavItem";
 import SidebarPage from "../../../components/SidebarPage";
 import "./sidebar.css";
 import SearchSelect from "../../../components/SearchSelect/SearchSelect";
 
-function Sidebar({ showSidebar, setSidebar }) {
-    const {
-        data,
-        trashItems,
-        handleNewPage,
-        handlePageRestore,
-        handlePageDelete,
-    } = useContext(WorkspaceContext);
+function Sidebar({ data, handleNewPage, showSidebar, setSidebar }) {
     const [showTrashPrompt, setTrashPrompt] = useState(false);
     const nav = useNavigate();
     const sidebarRef = useRef();
@@ -78,10 +70,7 @@ function Sidebar({ showSidebar, setSidebar }) {
             {showTrashPrompt && (
                 <SearchSelect
                     cords={sidebarRef.current.getBoundingClientRect()}
-                    items={trashItems}
                     showPrompt={setTrashPrompt}
-                    handlePageRestore={handlePageRestore}
-                    handlePageDelete={handlePageDelete}
                 />
             )}
         </>
