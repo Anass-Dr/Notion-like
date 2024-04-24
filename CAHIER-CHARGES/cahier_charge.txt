@@ -13,28 +13,26 @@ Le projet inclura le développement d'une application web avec des fonctionnalit
 
     Inscription d'utilisateurs avec des identifiants uniques.
     Connexion sécurisée avec gestion de sessions.
-    Profils d'utilisateurs avec la possibilité de personnaliser les préférences.
+    Réinitialisation de mot de passe
 
 2.2 Création et Organisation de Contenu
 
-    Création de pages avec une variété de types de blocs (texte, liste, tableau, fichier, etc.).
-    Possibilité de hiérarchiser les pages et les blocs.
-    Fonctionnalité de glisser-déposer pour organiser les blocs sur une page.
+    Création de pages avec une variété de types de blocs (texte, image, fichier, etc.).
     Fonction de recherche avancée pour trouver rapidement le contenu.
 
-2.4 Gestion des Autorisations
+2.3 Gestion des Autorisations
 
-    Attribution de droits d'accès différents aux utilisateurs pour chaque page ou workspace.
-    Historique des modifications avec des informations sur le responsable des changements.
+    Utilisation de JWT pour l'authentification et l'autorisation des utilisateurs.
 
-2.5 Intégration de Médias
+2.4 Intégration de Médias
 
     Possibilité d'ajouter et de visualiser des images, vidéos, et fichiers audio.
     Prise en charge d'incorporation de médias provenant de services externes (YouTube, Google Drive, etc.).
 
-2.6 Personnalisation de l'Interface
+2.5 Gestion des Pages
 
-    Thèmes et modes de visualisation personnalisables.
-    Possibilité de créer des tableaux de bord personnalisés.
-    Options de mise en page flexibles.
-
+    Fonctionnalité de soft delete : Permettre aux utilisateurs de supprimer temporairement une page sans la supprimer définitivement.
+    Restauration de page : Permettre aux utilisateurs de restaurer une page précédemment supprimée.
+    Suppression permanente de page : Permettre aux utilisateurs de supprimer une page de façon permanente, après la suppression temporaire.
+    Publication de page : Permettre aux utilisateurs de publier une page pour la rendre accessible publiquement.
+    Gestion de la couverture de page : Permettre aux utilisateurs de définir une image de couverture pour chaque page.

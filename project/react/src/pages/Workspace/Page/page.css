@@ -1,0 +1,33 @@
+main {
+    color: var(--text-dark);
+}
+main .head {
+    padding: 20px 40px 0;
+    font-weight: 700;
+}
+main .title {
+    font-size: 40px;
+}
+main .content {
+    padding: 0 60px;
+}
+main #prompt_input {
+    display: block;
+    width: 100%;
+    outline: none;
+    border: 0;
+    color: inherit;
+    background-color: var(--bg-dark);
+}
+
+@media screen and (max-width: 530px) {
+    main .content {
+        padding: 0 20px;
+    }
+    main .head {
+        padding: 20px 20px 0;
+    }
+    main .title {
+        font-size: 32px;
+    }
+}

@@ -1,0 +1,36 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    color: var(--text-dark);
+}
+header .title {
+    font-size: 14px;
+}
+header #options {
+    display: inherit;
+    font-size: 14px;
+}
+header #options li {
+    padding: 6px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+header #options li:hover {
+    background-color: var(--active-bg);
+}
+
+.header_bar {
+    display: none;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 530px) {
+    .header_icons {
+        display: none;
+    }
+    .header_bar {
+        display: block;
+    }
+}

@@ -1,0 +1,16 @@
+.sidebar__page {
+    color: var(--text-gray);
+    display: flex;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.sidebar__page:hover {
+    background-color: var(--hover-bg);
+}
+.sidebar__page.active {
+    background-color: var(--active-bg);
+}

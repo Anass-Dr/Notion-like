@@ -1,0 +1,123 @@
+.background {
+    flex: 1;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+.background::after {
+    content: "";
+    display: block;
+    padding-top: 25%;
+}
+
+.cover__options {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #fff;
+    border-radius: 4px;
+    padding: 4px 8px;
+}
+.cover__options span {
+    font-size: 12px;
+    font-weight: 600;
+    opacity: 0.9;
+    cursor: pointer;
+}
+
+.cover__toolbar .offset {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background-color: transparent;
+}
+.cover__toolbar .toolbar {
+    position: absolute;
+    top: 50px;
+    right: 20px;
+    width: 500px;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 12px 0;
+    z-index: 1001;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+}
+.cover__toolbar header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+.cover__toolbar header,
+.cover__toolbar main {
+    padding: 0 16px;
+}
+.cover__toolbar header ul {
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+}
+.cover__toolbar .toolbar__li {
+    font-size: 14px;
+    padding-bottom: 8px;
+    cursor: pointer;
+}
+.cover__toolbar .toolbar__li:last-of-type {
+    margin-left: auto;
+    opacity: 0.9;
+}
+.cover__toolbar .active {
+    border-bottom: 2px solid var(--text-dark);
+}
+.cover__toolbar main {
+    padding-top: 12px;
+}
+.cover__toolbar .upload__label {
+    display: inline-block;
+    width: 100%;
+    font-size: 14px;
+    font-weight: 300;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    text-align: center;
+    border-radius: 4px;
+    padding: 5px 0;
+    cursor: pointer;
+    margin-bottom: 12px;
+}
+.cover__toolbar .upload__label:hover {
+    background-color: var(--hover-bg);
+}
+.cover__toolbar #upload__cover {
+    opacity: 0;
+    width: 0;
+}
+.cover__toolbar span {
+    font-size: 12px;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.6);
+    padding: 6px 0;
+}
+.cover__toolbar #link__cover {
+    width: 100%;
+    padding: 4px 10px;
+    border: 1px solid rgba(55, 53, 47, 0.15);
+    border-radius: 4px;
+    outline: none;
+    font-size: 14px;
+    font-weight: 300;
+    background-color: rgba(242, 241, 238, 0.6);
+    margin-top: 4px;
+    margin-bottom: 12px;
+}
+.cover__toolbar .link__btn {
+    display: block;
+    width: 300px;
+    height: 28px;
+    border: none;
+    color: #fff;
+    font-weight: 500;
+    background-color: rgb(35, 131, 226);
+    border-radius: 4px;
+    margin: auto;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
