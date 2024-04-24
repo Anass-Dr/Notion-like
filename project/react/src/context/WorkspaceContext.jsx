@@ -6,6 +6,7 @@ export const WorkspaceContext = createContext(null);
 export function WorkspaceContextProvider({ children }) {
     const [data, setData] = useState([]);
     const [trashItems, setTrashItems] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     // Side Effects :
     useEffect(() => {
@@ -28,6 +29,7 @@ export function WorkspaceContextProvider({ children }) {
             });
             const result = await res.json();
             setTrashItems(result.data);
+            setLoading(false);
         };
         getTrashData();
     }, []);
@@ -124,6 +126,7 @@ export function WorkspaceContextProvider({ children }) {
             value={{
                 data,
                 trashItems,
+                loading,
                 handleNewPage,
                 saveChange,
                 changeActivePage,
