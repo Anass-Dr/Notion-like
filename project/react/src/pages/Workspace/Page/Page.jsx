@@ -1,13 +1,8 @@
-import { useContext } from "react";
-import { WorkspaceContext } from "../../../context/WorkspaceContext";
 import PageImage from "../../../components/PageImage";
 import Editor from "../../../Editor/Editor";
 import "./page.css";
 
-function Page() {
-    const { data, saveChange } = useContext(WorkspaceContext);
-    const currPage = data.filter((page) => page.active)[0];
-
+function Page({ currPage, saveChange }) {
     const handleTitleChange = (e) => {
         const title = e.currentTarget.textContent;
         if (title !== currPage.title) saveChange("title", title);

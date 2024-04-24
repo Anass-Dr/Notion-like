@@ -1,16 +1,13 @@
-import { useContext, useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { endpoint, headers } from "../../../config/fetch";
-import { WorkspaceContext } from "../../../context/WorkspaceContext";
 import PageOptions from "../../../components/PageOptions";
 import ShareToolbar from "../../../components/ShareToolbar/ShareToolbar";
 import "./header.css";
 
-function Header({ showSidebar }) {
+function Header({ showSidebar, currPage, deletePage }) {
     const [showOptions, setOptions] = useState(false);
     const [showShareOptions, setShareOptions] = useState(false);
     const [pagetoken, setPageToken] = useState("");
-    const { data, deletePage } = useContext(WorkspaceContext);
-    const currPage = data.filter((page) => page.active)[0];
     const headerRef = useRef(null);
 
     const handleDelete = () => {
