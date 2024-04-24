@@ -58,3 +58,32 @@
     inset: 0;
     background-color: transparent;
 }
+
+.search-select__header {
+    display: none;
+    padding: 12px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.search-select__header .title {
+    font-weight: 600;
+}
+.search-select__header .btn {
+    color: #00f;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 530px) {
+    .search-select {
+        width: 100vw;
+        height: 100vh;
+        left: 0 !important;
+        top: 0 !important;
+        transform: translateX(0) !important;
+    }
+
+    .search-select__header {
+        display: flex;
+        justify-content: space-between;
+    }
+}
