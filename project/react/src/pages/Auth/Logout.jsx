@@ -1,10 +1,16 @@
-import { Navigate } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function Logout() {
-    // Remove JWT Token :
-    localStorage.clear();
+    const auth = useContext(AuthContext);
+    const nav = useNavigate();
 
-    return <Navigate to="/login" />;
+    useEffect(() => {
+        auth.logout();
+        nav("/login");
+    }, [auth, nav]);
+    return;
 }
 
 export default Logout;
