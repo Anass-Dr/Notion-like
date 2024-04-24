@@ -1,12 +1,10 @@
+import { useContext } from "react";
 import "./SearchSelect.css";
+import { WorkspaceContext } from "../../context/WorkspaceContext";
 
-function SearchSelect({
-    items,
-    cords,
-    showPrompt,
-    handlePageRestore,
-    handlePageDelete,
-}) {
+function SearchSelect({ cords, showPrompt }) {
+    const { trashItems, handlePageRestore, handlePageDelete } =
+        useContext(WorkspaceContext);
     const styles = {
         bottom: 55,
         left: cords.right,
@@ -16,6 +14,13 @@ function SearchSelect({
     return (
         <>
             <div style={styles} className="search-select">
+                <div className="search-select__header">
+                    <span></span>
+                    <span className="title">Trash</span>
+                    <span onClick={() => showPrompt(false)} className="btn">
+                        Done
+                    </span>
+                </div>
                 <div className="prompt__search">
                     <input
                         type="search"
@@ -23,7 +28,7 @@ function SearchSelect({
                     />
                 </div>
                 <ul>
-                    {items.map((item, indx) => (
+                    {trashItems.map((item, indx) => (
                         <li key={indx}>
                             <svg
                                 role="graphics-symbol"
