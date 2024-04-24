@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import Logout from "./pages/Auth/Logout";
@@ -10,15 +9,15 @@ import { ToasterContextProvider } from "./context/ToasterContext";
 import PublicPage from "./pages/PublicPage/PublicPage";
 import NotFound from "./pages/NotFound/NotFound";
 import { AuthContextProvider } from "./context/AuthContext";
+import { WorkspaceContextProvider } from "./context/WorkspaceContext";
 
 function App() {
     return (
-        <AuthContextProvider>
-            <ToasterContextProvider>
+        <ToasterContextProvider>
+            <AuthContextProvider>
                 <Router>
                     <Toast />
                     <Routes>
-                        <Route path="/" element={<Home />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
                         <Route path="/logout" element={<Logout />} />
@@ -26,13 +25,37 @@ function App() {
                             path="/reset-password/:token"
                             element={<ResetPassword />}
                         />
-                        <Route path="/:username" element={<Workspace />} />
+                        <Route
+                            path="/"
+                            element={
+                                <WorkspaceContextProvider>
+                                    <Workspace />
+                                </WorkspaceContextProvider>
+                            }
+                        />
+                        <Route
+                            path="/:username"
+                            element={
+                                <WorkspaceContextProvider>
+                                    <Workspace />
+                                </WorkspaceContextProvider>
+                            }
+                        />
+                        <Route
+                            path="/:username/:pageName"
+                            element={
+                                <WorkspaceContextProvider>
+                                    <Workspace />
+                                </WorkspaceContextProvider>
+                            }
+                        />
                         <Route path="/pages/:token" element={<PublicPage />} />
                         <Route path="/Not-found" element={<NotFound />} />
+                        <Route path="*" element={<NotFound />} />
                     </Routes>
                 </Router>
-            </ToasterContextProvider>
-        </AuthContextProvider>
+            </AuthContextProvider>
+        </ToasterContextProvider>
     );
 }
 
