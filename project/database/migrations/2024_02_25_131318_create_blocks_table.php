@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('blocks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('type_id')->constrained('block_types')->onDelete('cascade')->onUpdate('cascade');
             $table->text('content');
             $table->integer('order');
+            $table->foreignId('type_id')->constrained('block_types')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('page_id')->constrained('pages')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
