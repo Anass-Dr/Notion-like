@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\BlockType;
-use Illuminate\Http\Request;
 
 class BlockTypeController extends Controller
 {

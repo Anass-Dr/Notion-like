@@ -32,8 +32,9 @@ function Login() {
     }
 
     // #- Methods :
-    const login = () => {
-        if (auth.login(user)) nav(`/`);
+    const login = async () => {
+        const result = await auth.login(user);
+        if (result) nav(`/`);
     };
 
     const forgotPassword = () => auth.forgotPassword(user.email);

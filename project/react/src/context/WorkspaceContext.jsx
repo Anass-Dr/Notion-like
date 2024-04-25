@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { endpoint, headers } from "../config/fetch";
 
 export const WorkspaceContext = createContext(null);
@@ -7,6 +8,7 @@ export function WorkspaceContextProvider({ children }) {
     const [data, setData] = useState([]);
     const [trashItems, setTrashItems] = useState([]);
     const [loading, setLoading] = useState(true);
+    const nav = useNavigate();
 
     // Side Effects :
     useEffect(() => {
@@ -17,9 +19,10 @@ export function WorkspaceContextProvider({ children }) {
             });
             const result = await res.json();
             if (res.status == 200) setData(result.data);
+            else nav("/login");
         };
         fetchData();
-    }, [trashItems]);
+    }, [trashItems, nav]);
 
     useEffect(() => {
         const getTrashData = async () => {
@@ -28,11 +31,12 @@ export function WorkspaceContextProvider({ children }) {
                 headers: headers(),
             });
             const result = await res.json();
-            setTrashItems(result.data);
+            if (res.status == 200) setTrashItems(result.data);
+            else nav("/login");
             setLoading(false);
         };
         getTrashData();
-    }, []);
+    }, [nav]);
 
     // Methods :
     const handleNewPage = async () => {
@@ -117,7 +121,7 @@ export function WorkspaceContextProvider({ children }) {
             method: "DELETE",
             headers: headers(),
         });
-        if (res.status == 200)
+        if (res.status == 204)
             setTrashItems((prev) => prev.filter((page) => page.id != id));
     };
 
