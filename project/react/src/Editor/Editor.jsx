@@ -32,10 +32,12 @@ export default function Editor({ blocksData, handleBlocks }) {
     const handlePromptPlacholder = (e) => {
         if (e.key === "/") {
             setPromptPlaceholder(false);
-            const cords = e.target.getBoundingClientRect();
-            setCords([+cords.top + 30, cords.left]);
+            setCords(e.target.getBoundingClientRect());
             setPrompt(true);
-        } else if (e.key === "Backspace" && e.currentTarget.textContent.length == 0) {
+        } else if (
+            e.key === "Backspace" &&
+            e.currentTarget.textContent.length == 0
+        ) {
             setPromptInput(false);
         } else {
             setPromptPlaceholder(true);
@@ -118,39 +120,54 @@ export default function Editor({ blocksData, handleBlocks }) {
                                 prompt_placeholder ? "prompt__input-after" : ""
                             }`}
                             contentEditable
+                            suppressContentEditableWarning={true}
                         ></div>
                     )}
                     {prompt && (
                         <Prompt
-                            top={cords[0]}
-                            left={cords[1]}
+                            cords={cords}
                             types={blockTypes}
                             handleBlockClick={handleBlockClick}
+                            setPrompt={setPrompt}
                         />
                     )}
 
                     <BlockOptions handleDelete={handleBlockDelete} />
+                    <div
+                        id="whitespace"
+                        onClick={() => setPromptInput(true)}
+                    ></div>
                 </div>
             </BlockOptionsContextProvider>
         </>
     );
 }
 
-function Prompt({ top, left, types, handleBlockClick }) {
-    const styles = { top, left };
+function Prompt({ cords, types, handleBlockClick, setPrompt }) {
+    const windowHeight = window.innerHeight;
+    const height = windowHeight * 0.4;
+    const styles = { left: cords.left };
+    if (cords.bottom + height > windowHeight)
+        styles.bottom = windowHeight - cords.top;
+    else styles.top = cords.bottom;
+
+    const hidePrompt = () => setPrompt(false);
 
     return (
-        <div style={styles} id="prompt" contentEditable="false">
-            <span className="prompt__head">Basic blocks</span>
-            {types.map((type) => (
-                <PromptBlock
-                    key={type.id}
-                    title={type.name}
-                    src={type.image}
-                    description={type.description}
-                    handleClick={handleBlockClick}
-                />
-            ))}
-        </div>
+        <>
+            <div style={styles} id="prompt" contentEditable="false">
+                <span className="prompt__head">Basic blocks</span>
+                {types.map((type) => (
+                    <PromptBlock
+                        key={type.id}
+                        title={type.name}
+                        src={type.image}
+                        description={type.description}
+                        handleClick={handleBlockClick}
+                    />
+                ))}
+            </div>
+            <div id="offset" onClick={hidePrompt}></div>
+        </>
     );
 }
