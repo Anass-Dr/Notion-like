@@ -13,6 +13,7 @@
     padding: 8px 4px;
     z-index: 100;
     overflow-y: auto;
+    z-index: 1000;
 }
 .prompt__head {
     display: inline-block;
@@ -52,6 +53,10 @@
 ._heading3 {
     font-weight: 600;
     font-size: 20px;
+}
+
+#whitespace {
+    height: 300px;
 }
 
 @media screen and (max-width: 530px) {
